@@ -29,10 +29,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  get: ^4.3.8
+  get_storage: ^2.0.3
+  google_fonts: ^2.1.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  lint:
 
 dev_dependencies:
   flutter_test:
@@ -61,33 +64,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/profile.png
-    - assets/icons/heart.png
-    - assets/icons/order.png
-    - assets/icons/payment.png
-    - assets/icons/shipping.png
-    - assets/icons/review.png
-    - assets/icons/voucher.png
-    - assets/icons/switchacc.png
-    - assets/icons/logout.png
-    - assets/images/pic.png
-    - assets/images/curve.png
-    - assets/images/documents.png
-    - assets/images/applogo1.png
-    - assets/images/applogo.png
-    - assets/icons/earningsmenu.png
-    - assets/icons/myearnings.png
-    - assets/icons/orderscomp1.png
-    - assets/icons/ordersPen.png
-    - assets/icons/orderscomp2.png
-    - assets/icons/user.png
-    - assets/icons/home.png
-    - assets/icons/navorder.png
-    - assets/icons/notification.png
-    - assets/icons/circlearrow.png
-    - assets/images/items/tomatoes.png
-    - assets/images/items/melons.png
-    - assets/images/items/grapes.png
+    - assets/images/
+    - assets/icons/
+    - assets/images/category/
+    - assets/images/items/
+    - assets/images/offers/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

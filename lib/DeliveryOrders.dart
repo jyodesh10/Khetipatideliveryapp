@@ -1,4 +1,5 @@
 import 'package:deliveryapp/constant/colors.dart';
+import 'package:deliveryapp/constant/size_config.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryOrders extends StatefulWidget {
@@ -41,6 +42,8 @@ class _DeliveryOrdersState extends State<DeliveryOrders> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 // height: 800,
+                padding: EdgeInsets.symmetric(
+                    horizontal: getWidth(20), vertical: getHeight(20)),
                 decoration: BoxDecoration(
                   color: AppColors.mainGrey,
                   borderRadius: BorderRadius.only(
@@ -50,126 +53,7 @@ class _DeliveryOrdersState extends State<DeliveryOrders> {
                 ),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 20,
-                          left: MediaQuery.of(context).size.width * 0.05,
-                          right: MediaQuery.of(context).size.width * 0.05),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              height: 40,
-                              child: TabBar(
-                                tabs: [
-                                  Tab(
-                                    child: FittedBox(
-                                      child: Text(
-                                        'Orders Completed',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.green[900],
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: FittedBox(
-                                      child: Text(
-                                        'Orders Pending',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.green[900],
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.zero,
-                              height: 800,
-                              width: 350,
-                              child: TabBarView(
-                                children: [
-                                  ListView(
-                                    children: [
-                                      OrderItems(
-                                          'assets/images/items/grapes.png',
-                                          'Cherry',
-                                          'Delivered',
-                                          Color.fromRGBO(135, 194, 65, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/melons.png',
-                                          'Meolon',
-                                          'Delivered',
-                                          Color.fromRGBO(135, 194, 65, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/tomatoes.png',
-                                          'Tomatoes',
-                                          'Delivered',
-                                          Color.fromRGBO(135, 194, 65, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/melons.png',
-                                          'melons',
-                                          'Delivered',
-                                          Color.fromRGBO(135, 194, 65, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/grapes.png',
-                                          'Cherry',
-                                          'Delivered',
-                                          Color.fromRGBO(135, 194, 65, 0.2)),
-                                    ],
-                                  ),
-                                  ListView(
-                                    children: [
-                                      OrderItems(
-                                          'assets/images/items/melons.png',
-                                          'Melon',
-                                          'Pending',
-                                          Color.fromRGBO(216, 47, 47, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/grapes.png',
-                                          'Cherry',
-                                          'Pending',
-                                          Color.fromRGBO(216, 47, 47, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/melons.png',
-                                          'Melon',
-                                          'Pending',
-                                          Color.fromRGBO(216, 47, 47, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/tomatoes.png',
-                                          'Tomatoes',
-                                          'Pending',
-                                          Color.fromRGBO(216, 47, 47, 0.2)),
-                                      Divider(),
-                                      OrderItems(
-                                          'assets/images/items/melons.png',
-                                          'Melon',
-                                          'Pending',
-                                          Color.fromRGBO(216, 47, 47, 0.2)),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    buildOrdersTab(),
                     SizedBox(
                       height: 30,
                     )
@@ -179,73 +63,53 @@ class _DeliveryOrdersState extends State<DeliveryOrders> {
             ],
           ),
         ),
-        // floatingActionButtonLocation:
-        //     FloatingActionButtonLocation.miniCenterDocked,
-        // floatingActionButton: InkWell(
-        //   onTap: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(builder: (context) => Cart()),
-        //     );
-        //   },
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(top: 20.0),
-        //     child: Container(
-        //       // padding: EdgeInsets.only(top: 20),
-        //       width: 68,
-        //       height: 68,
-        //       decoration: BoxDecoration(
-        //           color: AppColors.mainGrey,
-        //           border: Border.all(width: 5, color: AppColors.mainGreen),
-        //           borderRadius: BorderRadius.circular(40)),
-        //       child: Icon(
-        //         Icons.shopping_cart_outlined,
-        //         color: Color.fromRGBO(0, 0, 0, 0.5),
-        //         size: 30,
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // bottomNavigationBar: BottomNav(),
       ),
     );
   }
 
-  Widget OrderItems(WishlistItemImg, itemName, title, LabelColor) {
+  OrderItems(wishlistItemImg, itemName, title, labelColor) {
     return Container(
-      height: 113,
+      padding: EdgeInsets.symmetric(horizontal: getWidth(10)),
+      height: getHeight(113),
       width: MediaQuery.of(context).size.width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: 96,
-            height: 71,
-            child: Image.asset(
-              WishlistItemImg,
-              fit: BoxFit.contain,
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+          Row(
             children: [
-              Text(
-                itemName,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textblack),
+              Container(
+                width: getWidth(96),
+                height: getHeight(71),
+                child: Image.asset(
+                  wishlistItemImg,
+                  fit: BoxFit.contain,
+                ),
               ),
               SizedBox(
-                height: 5,
+                width: 10,
               ),
-              Text(
-                'Dropoff: Baneshwor,\nKathmandu',
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.03,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(0, 0, 0, 0.8)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    itemName,
+                    style: TextStyle(
+                        fontSize: getFont(16),
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textblack),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Dropoff: Baneshwor,\nKathmandu',
+                    style: TextStyle(
+                        fontSize: getFont(12),
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromRGBO(0, 0, 0, 0.8)),
+                  ),
+                ],
               ),
             ],
           ),
@@ -253,7 +117,7 @@ class _DeliveryOrdersState extends State<DeliveryOrders> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              labels(title, LabelColor),
+              labels(title, labelColor),
               SizedBox(
                 height: 10,
               ),
@@ -261,7 +125,7 @@ class _DeliveryOrdersState extends State<DeliveryOrders> {
                 child: Text(
                   '23 hrs ago',
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.03,
+                    fontSize: getFont(10),
                     fontWeight: FontWeight.w400,
                     color: Color.fromRGBO(0, 0, 0, 0.8),
                   ),
@@ -275,29 +139,112 @@ class _DeliveryOrdersState extends State<DeliveryOrders> {
   }
 
   Widget labels(title, LabelColor) {
-    return FittedBox(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 10),
-        child: Container(
-          //width: 50,
-          // height: 22,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4), color: LabelColor),
-          child: Center(
-            child: FittedBox(
-              child: Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Text(
-                  title,
-                  style: TextStyle(
-                      color: AppColors.textGreen,
-                      fontSize: MediaQuery.of(context).size.width / 30,
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-            ),
+    return Container(
+      //width: 50,
+      // height: 22,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4), color: LabelColor),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Text(
+            title,
+            style: TextStyle(
+                color: AppColors.textGreen,
+                fontSize: getFont(14),
+                fontWeight: FontWeight.w400),
           ),
         ),
+      ),
+    );
+  }
+
+  buildOrdersTab() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        children: [
+          Container(
+            // width: MediaQuery.of(context).size.width * 0.9,
+            height: 40,
+            child: TabBar(
+              indicatorColor: AppColors.textGreen,
+              indicatorSize: TabBarIndicatorSize.label,
+              // indicatorWeight: 5,
+              tabs: [
+                Tab(
+                  child: FittedBox(
+                    child: Text(
+                      'Orders Completed',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.green[900],
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: FittedBox(
+                    child: Text(
+                      'Orders Pending',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.green[900],
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.zero,
+            height: 800,
+            //width: 350,
+            child: TabBarView(
+              physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              children: [
+                Column(
+                  children: [
+                    OrderItems('assets/images/items/grapes.png', 'Cherry',
+                        'Delivered', Color.fromRGBO(135, 194, 65, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/melons.png', 'Meolon',
+                        'Delivered', Color.fromRGBO(135, 194, 65, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/tomatoes.png', 'Tomatoes',
+                        'Delivered', Color.fromRGBO(135, 194, 65, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/melons.png', 'melons',
+                        'Delivered', Color.fromRGBO(135, 194, 65, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/grapes.png', 'Cherry',
+                        'Delivered', Color.fromRGBO(135, 194, 65, 0.2)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    OrderItems('assets/images/items/melons.png', 'Melon',
+                        'Pending', Color.fromRGBO(216, 47, 47, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/grapes.png', 'Cherry',
+                        'Pending', Color.fromRGBO(216, 47, 47, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/melons.png', 'Melon',
+                        'Pending', Color.fromRGBO(216, 47, 47, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/tomatoes.png', 'Tomatoes',
+                        'Pending', Color.fromRGBO(216, 47, 47, 0.2)),
+                    Divider(),
+                    OrderItems('assets/images/items/melons.png', 'Melon',
+                        'Pending', Color.fromRGBO(216, 47, 47, 0.2)),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

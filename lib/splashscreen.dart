@@ -1,7 +1,9 @@
+import 'package:deliveryapp/LoginRegisterPage/login.dart';
 import 'package:deliveryapp/constant/colors.dart';
-import 'package:deliveryapp/delivery.dart';
 import "package:flutter/material.dart";
 import 'dart:async';
+
+import 'constant/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
@@ -14,12 +16,13 @@ class _SplashScreenState extends State<SplashScreen> {
     new Timer(new Duration(milliseconds: 2000), () {
       // set your desired delay time here
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new Delivery()));
+          new MaterialPageRoute(builder: (context) => new LoginPage()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    SizeConfigs().init(context);
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
       body: Container(
