@@ -1,7 +1,10 @@
-import 'package:deliveryapp/delivery.dart';
+import 'package:deliveryapp/screens/home/delivery.dart';
+import 'package:deliveryapp/screens/register/register.dart';
+import 'package:deliveryapp/widgets/curve_clipper.dart';
 import 'package:flutter/material.dart';
 import 'package:deliveryapp/constant/colors.dart';
-import 'package:deliveryapp/LoginRegisterPage/Register.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,132 +13,92 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class CurveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    int curveHeight = 40;
-    Offset controlPoint = Offset(size.width / 2, size.height + curveHeight);
-    Offset endPoint = Offset(size.width, size.height - curveHeight);
-
-    Path path = Path()
-      ..lineTo(0, size.height - curveHeight)
-      ..quadraticBezierTo(
-          controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy)
-      ..lineTo(size.width, 0)
-      ..close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: ClipPath(
-                  clipper: CurveClipper(),
-                  child: Container(
-                    color: AppColors.mainGreen,
-                    width: MediaQuery.of(context).size.width,
-                    height: 100,
-                    // child: Container(
-                    //   height: 10,
-                    //   width: 10,
-                    //   color: Colors.white,
-                    // )
-
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Image.asset(
-                        'assets/images/applogo.png',
-                        width: 90,
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height > 500
+                ? MediaQuery.of(context).size.height
+                : 800,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: ClipPath(
+                    clipper: CurveClipper(),
+                    child: Container(
+                      color: AppColors.mainGreen,
+                      width: MediaQuery.of(context).size.width,
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Image.asset(
+                          'assets/images/applogo.png',
+                          width: 90,
+                        ),
                       ),
                     ),
-                    // decoration: BoxDecoration(
-                    //     color: AppColors.mainGreen,
-                    //     borderRadius: BorderRadius.only(
-                    //         bottomLeft: Radius.circular(170),
-                    //         bottomRight: Radius.circular(170),
-                    //         ),
-                    //         ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // borderRadius: BorderRadius.only(
-                    //     bottomLeft: Radius.circular(20),
-                    //     bottomRight: Radius.circular(20),
-                    //     ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width * 0.1,
-                        bottom: MediaQuery.of(context).size.width * 0.1,
-                        right: MediaQuery.of(context).size.width * 0.08,
-                        left: MediaQuery.of(context).size.width * 0.08),
+                SizedBox(height: 20.h),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 30.w),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Login',
                           style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 30.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColors.mainGreen),
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.1),
+                        SizedBox(height: 20.h),
                         TextFormField(
                           decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.email_sharp, size: 20),
+                              prefixIcon: Icon(Icons.email_sharp, size: 20.sp),
                               labelText: "Enter your email or phone number",
                               //hintText: "Full Name",
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1,
                                     color: Color.fromRGBO(0, 0, 0, 0.1)),
                                 // borderRadius: BorderRadius.circular(15),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 2, color: AppColors.mainGreen),
                                 borderRadius: BorderRadius.circular(0),
                               )),
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03),
+                        SizedBox(height: 20.h),
                         TextFormField(
                           decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.vpn_key_rounded,
-                                size: 20,
+                                size: 20.sp,
                               ),
                               labelText: "Enter your password",
                               //hintText: "Full Name",
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                     width: 1,
                                     color: Color.fromRGBO(0, 0, 0, 0.1)),
                                 // borderRadius: BorderRadius.circular(15),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     width: 2, color: AppColors.mainGreen),
                                 borderRadius: BorderRadius.circular(0),
                               )),
@@ -148,36 +111,33 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   'Forgot Password?',
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                      color:
+                                          const Color.fromRGBO(0, 0, 0, 0.5)),
                                 )),
                           ],
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.07,
+                        SizedBox(
+                          height: 50.h,
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Delivery()),
-                              );
+                              Get.to(const Delivery());
                             },
                             child: Text(
                               'Login',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color.fromRGBO(135, 194, 65, 1)),
+                                  const Color.fromRGBO(135, 194, 65, 1)),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -196,34 +156,31 @@ class _LoginPageState extends State<LoginPage> {
                             Text(
                               'Not a member yet?',
                               style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                  color: const Color.fromRGBO(0, 0, 0, 0.5)),
                             ),
                             TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => RegisterPage()),
-                                  );
-                                },
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.mainGreen,
-                                      decoration: TextDecoration.underline),
-                                ))
+                              onPressed: () {
+                                Get.to(const RegisterPage());
+                              },
+                              child: Text(
+                                'Sign up',
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.mainGreen,
+                                    decoration: TextDecoration.underline),
+                              ),
+                            )
                           ],
                         )
                       ],
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

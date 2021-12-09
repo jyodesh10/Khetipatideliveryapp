@@ -20,7 +20,7 @@ class _MyEarningsState extends State<MyEarnings> {
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
+        toolbarHeight: getHeight(70),
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.mainGreen,
         centerTitle: true,
@@ -28,7 +28,7 @@ class _MyEarningsState extends State<MyEarnings> {
         title: Text(
           'My Earnings',
           style: TextStyle(
-              fontSize: 22,
+              fontSize: getFont(22),
               color: AppColors.textGreen,
               fontWeight: FontWeight.bold),
         ),
@@ -36,7 +36,7 @@ class _MyEarningsState extends State<MyEarnings> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios_rounded,
+          icon: const Icon(Icons.arrow_back_ios_rounded,
               size: 20, color: AppColors.textGreen),
         ),
         actions: [
@@ -58,7 +58,7 @@ class _MyEarningsState extends State<MyEarnings> {
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(
                   horizontal: getWidth(27), vertical: getHeight(22)),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.mainGrey,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
@@ -73,46 +73,46 @@ class _MyEarningsState extends State<MyEarnings> {
                   buildEarningsHistoryCard(
                       'Earned while Delivering from Shankhamul to Satdobato',
                       'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
-                      Color.fromRGBO(2, 95, 51, 1),
-                      Color.fromRGBO(135, 194, 65, 0.5)),
+                      const Color.fromRGBO(2, 95, 51, 1),
+                      const Color.fromRGBO(135, 194, 65, 0.5)),
                   buildDate('Yesterday'),
                   buildEarningsHistoryCard(
                       'Withdrawn Amount',
                       'Balance: 250.55',
-                      Color.fromRGBO(216, 47, 47, 1),
-                      Color.fromRGBO(216, 47, 47, 0.2)),
+                      const Color.fromRGBO(216, 47, 47, 1),
+                      const Color.fromRGBO(216, 47, 47, 0.2)),
                   SizedBox(
-                    height: 15,
+                    height: getHeight(15),
                   ),
                   buildEarningsHistoryCard(
                       'Earned while Delivering from Shankhamul to Satdobato',
                       'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
-                      Color.fromRGBO(2, 95, 51, 1),
-                      Color.fromRGBO(135, 194, 65, 0.5)),
+                      const Color.fromRGBO(2, 95, 51, 1),
+                      const Color.fromRGBO(135, 194, 65, 0.5)),
                   SizedBox(
-                    height: 15,
+                    height: getHeight(15),
                   ),
                   buildEarningsHistoryCard(
                       'Withdrawn Amount',
                       'Balance: 250.55',
-                      Color.fromRGBO(216, 47, 47, 1),
-                      Color.fromRGBO(216, 47, 47, 0.2)),
+                      const Color.fromRGBO(216, 47, 47, 1),
+                      const Color.fromRGBO(216, 47, 47, 0.2)),
                   buildDate('15th Aug. 2021'),
                   buildEarningsHistoryCard(
                       'Earned while Delivering from Shankhamul to Satdobato',
                       'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
-                      Color.fromRGBO(2, 95, 51, 1),
-                      Color.fromRGBO(135, 194, 65, 0.5)),
+                      const Color.fromRGBO(2, 95, 51, 1),
+                      const Color.fromRGBO(135, 194, 65, 0.5)),
                   SizedBox(
-                    height: 15,
+                    height: getHeight(15),
                   ),
                   buildEarningsHistoryCard(
                       'Withdrawn Amount',
                       'Balance: 250.55',
-                      Color.fromRGBO(216, 47, 47, 1),
-                      Color.fromRGBO(216, 47, 47, 0.2)),
+                      const Color.fromRGBO(216, 47, 47, 1),
+                      const Color.fromRGBO(216, 47, 47, 0.2)),
                   SizedBox(
-                    height: 15,
+                    height: getHeight(15),
                   ),
                 ],
               ),
@@ -147,12 +147,12 @@ class _MyEarningsState extends State<MyEarnings> {
                   ),
                   backgroundColor: containerColor),
               SizedBox(
-                width: 10,
+                width: getWidth(10),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: getWidth(170),
                     child: Text(
                       title,
@@ -163,9 +163,9 @@ class _MyEarningsState extends State<MyEarnings> {
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: getHeight(15),
                   ),
-                  Container(
+                  SizedBox(
                     width: getWidth(170),
                     child: Text(
                       detail,
@@ -174,7 +174,7 @@ class _MyEarningsState extends State<MyEarnings> {
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: getHeight(15),
                   ),
                   Text(
                     '10 minutes ago',
@@ -199,186 +199,12 @@ class _MyEarningsState extends State<MyEarnings> {
     );
   }
 
-  Widget _buildPopup(BuildContext context) {
-    return AlertDialog(
-      // contentPadding: EdgeInsets.zero,
-      content: Container(
-        width: double.infinity,
-        // padding: EdgeInsets.all(20),
-        // height: MediaQuery.of(context).size.height / 2,
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Earnings Filter',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'From',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(0, 0, 0, 0.5)),
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              labelText: '2021-01-01',
-                              //hintText: "Full Name",
-
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 1,
-                                    color: Color.fromRGBO(0, 0, 0, 0.1)),
-                                // borderRadius: BorderRadius.circular(15),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 1, color: Colors.red),
-                                borderRadius: BorderRadius.circular(0),
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'To',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(0, 0, 0, 0.5)),
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              labelText: '2021-01-01',
-                              //hintText: "Full Name",
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 1,
-                                    color: Color.fromRGBO(0, 0, 0, 0.1)),
-                                // borderRadius: BorderRadius.circular(15),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 1, color: Colors.red),
-                                borderRadius: BorderRadius.circular(0),
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              'status',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Color.fromRGBO(0, 0, 0, 0.5)),
-            ),
-            InkWell(
-              child: Container(
-                width: 352,
-                height: 45,
-                decoration: BoxDecoration(
-                  border:
-                      Border.all(width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Text(
-                      //   dropdownValue,
-                      //   style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5)),
-                      // ),
-                      DropdownButton<String>(
-                        items: <String>['All', 'Earnings', 'Withdrawn']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        value: dropdownValue,
-                        icon: Icon(Icons.keyboard_arrow_down_rounded),
-                        onChanged: (String? newValue) async {
-                          setState(() {
-                            dropdownValue = newValue!;
-                          });
-                        },
-                      ),
-                      // Icon(
-                      //   Icons.keyboard_arrow_down_sharp,
-                      //   color: Color.fromRGBO(0, 0, 0, 0.6),
-                      // )
-                    ],
-                  ),
-                ),
-              ),
-              onTap: () {},
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              height: 45,
-              child: RaisedButton(
-                color: AppColors.mainGreen,
-                onPressed: () {},
-                child: Center(
-                  child: Text(
-                    'Search',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   buildEarningsCard() {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: getHeight(76),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(135, 194, 65, 0.3),
+        color: const Color.fromRGBO(135, 194, 65, 0.3),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
@@ -392,17 +218,17 @@ class _MyEarningsState extends State<MyEarnings> {
                 Text(
                   'Rs.',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: getFont(20),
                       fontWeight: FontWeight.w700,
                       color: AppColors.textGreen),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: getWidth(5),
                 ),
                 Text(
                   "200.0",
                   style: TextStyle(
-                      fontSize: 25,
+                      fontSize: getFont(25),
                       fontWeight: FontWeight.w700,
                       color: AppColors.textGreen),
                 )
@@ -411,7 +237,7 @@ class _MyEarningsState extends State<MyEarnings> {
             Text(
               'Total Withdrawn',
               style: TextStyle(
-                  fontSize: 12,
+                  fontSize: getFont(12),
                   fontWeight: FontWeight.w400,
                   color: AppColors.textGreen),
             )
@@ -427,7 +253,7 @@ class _MyEarningsState extends State<MyEarnings> {
       child: Text(
         date,
         style: TextStyle(
-            color: Color.fromRGBO(0, 0, 0, 0.6),
+            color: const Color.fromRGBO(0, 0, 0, 0.6),
             fontSize: getFont(14),
             fontWeight: FontWeight.w400),
       ),
@@ -467,18 +293,19 @@ class _MyEarningsState extends State<MyEarnings> {
                                 Text(
                                   'From',
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: getFont(16),
                                       fontWeight: FontWeight.w400,
-                                      color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                      color:
+                                          const Color.fromRGBO(0, 0, 0, 0.5)),
                                 ),
                                 SizedBox(
-                                  height: 45,
+                                  height: getHeight(45),
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                         labelText: '2021-01-01',
                                         //hintText: "Full Name",
 
-                                        enabledBorder: OutlineInputBorder(
+                                        enabledBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1,
                                               color:
@@ -486,7 +313,7 @@ class _MyEarningsState extends State<MyEarnings> {
                                           // borderRadius: BorderRadius.circular(15),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                               width: 1, color: Colors.red),
                                           borderRadius:
                                               BorderRadius.circular(0),
@@ -497,7 +324,7 @@ class _MyEarningsState extends State<MyEarnings> {
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            width: getWidth(10),
                           ),
                           Flexible(
                             child: Column(
@@ -506,17 +333,18 @@ class _MyEarningsState extends State<MyEarnings> {
                                 Text(
                                   'To',
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: getFont(16),
                                       fontWeight: FontWeight.w400,
-                                      color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                      color:
+                                          const Color.fromRGBO(0, 0, 0, 0.5)),
                                 ),
                                 SizedBox(
-                                  height: 45,
+                                  height: getHeight(45),
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                         labelText: '2021-01-01',
                                         //hintText: "Full Name",
-                                        enabledBorder: OutlineInputBorder(
+                                        enabledBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1,
                                               color:
@@ -524,7 +352,7 @@ class _MyEarningsState extends State<MyEarnings> {
                                           // borderRadius: BorderRadius.circular(15),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                               width: 1, color: Colors.red),
                                           borderRadius:
                                               BorderRadius.circular(0),
@@ -542,17 +370,18 @@ class _MyEarningsState extends State<MyEarnings> {
                       Text(
                         'status',
                         style: TextStyle(
-                            fontSize: 16,
+                            fontSize: getFont(16),
                             fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(0, 0, 0, 0.5)),
+                            color: const Color.fromRGBO(0, 0, 0, 0.5)),
                       ),
                       InkWell(
                         child: Container(
-                          width: 352,
-                          height: 45,
+                          //   width: 352,
+                          height: getHeight(45),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)),
+                                width: 1,
+                                color: const Color.fromRGBO(0, 0, 0, 0.1)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10, right: 10),
@@ -575,7 +404,8 @@ class _MyEarningsState extends State<MyEarnings> {
                                     );
                                   }).toList(),
                                   value: dropdownValue,
-                                  icon: Icon(Icons.keyboard_arrow_down_rounded),
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_rounded),
                                   onChanged: (String? newValue) async {
                                     setState(() {
                                       dropdownValue = newValue!;

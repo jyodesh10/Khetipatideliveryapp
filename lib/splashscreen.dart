@@ -1,11 +1,15 @@
-import 'package:deliveryapp/LoginRegisterPage/login.dart';
 import 'package:deliveryapp/constant/colors.dart';
+import 'package:deliveryapp/screens/login/login.dart';
 import "package:flutter/material.dart";
+import 'package:get/get.dart';
 import 'dart:async';
 
 import 'constant/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
@@ -13,10 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    new Timer(new Duration(milliseconds: 2000), () {
+    Timer(const Duration(milliseconds: 2000), () {
       // set your desired delay time here
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new LoginPage()));
+      Get.to(const LoginPage());
     });
   }
 
@@ -27,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColors.mainGreen,
       body: Container(
         alignment: Alignment.center,
-        child: Image.asset('assets/images/applogo.png',
+        child: Image.asset('assets/images/applogo1.png',
             width: MediaQuery.of(context).size.width / 1.5,
             fit: BoxFit.scaleDown),
       ),

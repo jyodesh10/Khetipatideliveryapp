@@ -1,13 +1,11 @@
-// ignore_for_file: deprecated_member_use
-
-import 'package:deliveryapp/Documents.dart';
-import 'package:deliveryapp/delivery.dart';
+import 'package:deliveryapp/screens/edit_document/edit_documents.dart';
+import 'package:deliveryapp/widgets/appbar.dart';
 import 'package:deliveryapp/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'constant/colors.dart';
-import 'constant/size_config.dart';
+import '../../constant/colors.dart';
+import '../../constant/size_config.dart';
 
 class DeliveryEditProfile extends StatefulWidget {
   const DeliveryEditProfile({Key? key}) : super(key: key);
@@ -21,60 +19,13 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
-      appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.mainGreen,
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          'Edit Profile',
-          style: TextStyle(
-              fontSize: getFont(22),
-              color: AppColors.textGreen,
-              fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Delivery()),
-              );
-            },
-            icon: const Icon(Icons.arrow_back_ios_rounded,
-                size: 20, color: AppColors.textGreen)),
-      ),
+      appBar: buildAppbar(Icons.arrow_back_ios, 'Edit Profile'),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: getHeight(228),
-              width: MediaQuery.of(context).size.width,
-              color: AppColors.mainGreen,
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: getHeight(33), bottom: getHeight(15)),
-                    child: Image.asset(
-                      'assets/images/profile.png',
-                      height: getHeight(135),
-                      width: getWidth(135),
-                    ),
-                  ),
-                  Text(
-                    "Change Profile Picture",
-                    style: TextStyle(
-                        fontSize: getFont(16),
-                        color: Colors.green[900],
-                        fontWeight: FontWeight.normal),
-                  ),
-                ],
-              ),
-            ),
+            buildEditProfileTop(),
             Container(
                 width: MediaQuery.of(context).size.width,
-                height: 815,
                 decoration: const BoxDecoration(
                   color: AppColors.mainGrey,
                   borderRadius: BorderRadius.only(
@@ -205,16 +156,14 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
   documentsButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => EditDocuments()),
-        );
+        Get.to(const EditDocuments());
       },
       child: Container(
         height: getHeight(45),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)),
+          border:
+              Border.all(width: 1, color: const Color.fromRGBO(0, 0, 0, 0.1)),
           color: AppColors.mainGrey,
         ),
         child: Row(
@@ -224,11 +173,12 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
               padding: const EdgeInsets.only(left: 20),
               child: Text(
                 'Documents',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                style: TextStyle(
+                    fontSize: getFont(18), fontWeight: FontWeight.w400),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
+            const Padding(
+              padding: EdgeInsets.only(right: 15),
               child: Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 15,
@@ -237,6 +187,32 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  buildEditProfileTop() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      color: AppColors.mainGreen,
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: getHeight(33), bottom: getHeight(15)),
+            child: Image.asset(
+              'assets/images/profile.png',
+              height: getHeight(135),
+              width: getWidth(135),
+            ),
+          ),
+          Text(
+            "Change Profile Picture",
+            style: TextStyle(
+                fontSize: getFont(16),
+                color: Colors.green[900],
+                fontWeight: FontWeight.normal),
+          ),
+        ],
       ),
     );
   }
@@ -301,6 +277,7 @@ void _settingModalBottomSheet(context) {
                     ButtonTheme(
                       minWidth: getWidth(200),
                       height: getHeight(48),
+                      // ignore: deprecated_member_use
                       child: RaisedButton(
                         color: AppColors.mainGreen,
                         onPressed: () {},

@@ -1,14 +1,16 @@
 import 'dart:ui';
 
-import 'package:deliveryapp/DeliveryOrders.dart';
-import 'package:deliveryapp/myEarnings.dart';
+import 'package:deliveryapp/screens/orders/delivery_orders.dart';
+import 'package:deliveryapp/screens/earnings/my_earnings.dart';
 import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/constant/size_config.dart';
+import 'package:deliveryapp/screens/login/login.dart';
+import 'package:deliveryapp/widgets/appbar.dart';
+import 'package:deliveryapp/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'LoginRegisterPage/login.dart';
-import 'deliveryEditProfile.dart';
+import '../edit_profile/delivery_edit_profile.dart';
 
 class Delivery extends StatefulWidget {
   const Delivery({Key? key}) : super(key: key);
@@ -22,93 +24,18 @@ class _DeliveryState extends State<Delivery> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
-      appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.mainGreen,
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          'KhetiPati',
-          style: TextStyle(
-              fontSize: 22,
-              color: AppColors.textGreen,
-              fontWeight: FontWeight.bold),
-        ),
-        // leading: IconButton(
-        //     onPressed: () {
-        //       //  Navigator.pop(context);
-        //     },
-        //     icon: Icon(Icons.arrow_back_ios_rounded,
-        //         size: 20, color: AppColors.textGreen)),
-      ),
+      appBar: buildAppbar(null, 'Khetipati'),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              //height: 283,
-              width: MediaQuery.of(context).size.width,
-              color: AppColors.mainGreen,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 33,
-                      bottom: 10,
-                    ),
-                    child: Image.asset(
-                      'assets/images/profile.png',
-                      height: 135,
-                      width: 135,
-                    ),
-                  ),
-                  Text(
-                    "Howard Wollowitz",
-                    style: TextStyle(
-                        fontSize: 23,
-                        color: Colors.green[900],
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Mangalbazar, Lalitpur",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.green[900],
-                        fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(
-                    height: 22,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(255, 255, 255, 0.5),
-                        textStyle: const TextStyle(
-                            fontSize: 15, color: Color.fromRGBO(2, 95, 51, 1))),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DeliveryEditProfile()),
-                      );
-                    },
-                    child: const Text(
-                      'Edit',
-                      style: TextStyle(
-                          fontSize: 15, color: Color.fromRGBO(2, 95, 51, 1)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  )
-                ],
-              ),
-            ),
+            buildProfileTop(),
             Container(
               width: MediaQuery.of(context).size.width,
               // height: 815,
-              padding: EdgeInsets.only(
-                  right: getWidth(20), left: getWidth(20), top: getHeight(22)),
-              decoration: BoxDecoration(
+              padding: EdgeInsets.symmetric(
+                  horizontal: getWidth(20), vertical: getHeight(22)),
+
+              decoration: const BoxDecoration(
                 color: AppColors.mainGrey,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
@@ -119,10 +46,7 @@ class _DeliveryState extends State<Delivery> {
                 children: [
                   buildDeliveryProfileMenu(),
                   buildDeliveryPersonalInfoCard(),
-                  logoutAndSwitchAccCard(),
-                  SizedBox(
-                    height: 30,
-                  )
+                  logoutAndSwitchAccTile(),
                 ],
               ),
             )
@@ -132,25 +56,28 @@ class _DeliveryState extends State<Delivery> {
     );
   }
 
-  Widget profileOptions(optionIcon, optionName, curr, price) {
+  profileOptions(optionIcon, optionName, subvalue, value) {
     return Container(
-      width: getWidth(152),
+      width: getWidth(140),
       height: getHeight(57),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Color.fromRGBO(191, 191, 191, 0.6)),
+        border: Border.all(color: const Color.fromRGBO(191, 191, 191, 0.6)),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 10,
+            width: getWidth(10),
           ),
           Image.asset(
             optionIcon,
             // color: AppColors.mainGreen,
+          ),
+          SizedBox(
+            width: getWidth(12),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -159,19 +86,19 @@ class _DeliveryState extends State<Delivery> {
               Row(
                 children: [
                   Text(
-                    curr,
+                    subvalue,
                     style: TextStyle(
-                        fontSize: 11,
+                        fontSize: getFont(11),
                         fontWeight: FontWeight.w400,
                         color: AppColors.textGreen),
                   ),
                   SizedBox(
-                    width: 5,
+                    width: getWidth(5),
                   ),
                   Text(
-                    price,
+                    value,
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: getFont(15),
                         fontWeight: FontWeight.w400,
                         color: AppColors.textGreen),
                   )
@@ -180,50 +107,26 @@ class _DeliveryState extends State<Delivery> {
               Text(
                 optionName,
                 style: TextStyle(
-                    fontSize: 11,
+                    fontSize: getFont(11),
                     fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(0, 0, 0, 0.6)),
+                    color: const Color.fromRGBO(0, 0, 0, 0.6)),
               )
             ],
           ),
           SizedBox(
-            width: 10,
+            width: getWidth(10),
           ),
         ],
       ),
     );
   }
 
-  Widget PersonalInfo(options, answers) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.090,
-            ),
-            child: Text(options,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-          ),
-        ),
-        SizedBox(width: 30),
-        Expanded(
-          flex: 2,
-          child: Text(
-            answers,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
-        )
-      ],
-    );
-  }
-
   buildDeliveryProfileMenu() {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      //  width: MediaQuery.of(context).size.width,
       // height: 170,
+      padding: EdgeInsets.symmetric(
+          horizontal: getWidth(18), vertical: getHeight(20)),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -232,30 +135,27 @@ class _DeliveryState extends State<Delivery> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.035,
-          ),
+          // SizedBox(
+          //   height: MediaQuery.of(context).size.height * 0.035,
+          // ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
                 mouseCursor: SystemMouseCursors.click,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyEarnings()),
-                  );
+                  Get.to(const MyEarnings());
                 },
                 child: profileOptions('assets/icons/myEarnings.png',
                     'My Earnings', 'Rs', '150.55'),
               ),
+              SizedBox(
+                width: getWidth(13),
+              ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DeliveryOrders()),
-                  );
+                  Get.to(const DeliveryOrders());
                 },
                 child: profileOptions(
                     'assets/icons/checked.png', 'Orders Completed', '', '50'),
@@ -263,36 +163,30 @@ class _DeliveryState extends State<Delivery> {
             ],
           ),
           SizedBox(
-            height: 10,
+            height: getHeight(13),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DeliveryOrders()),
-                  );
+                  Get.to(const DeliveryOrders());
                 },
                 child: profileOptions(
                     'assets/icons/pending.png', 'Orders Pending', '', '10'),
               ),
+              SizedBox(
+                width: getWidth(13),
+              ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyEarnings()),
-                  );
+                  Get.to(const MyEarnings());
                 },
                 child: profileOptions('assets/icons/withdrawn.png',
                     'Amount Withdrawn', 'Rs', '100'),
               ),
             ],
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.035,
           ),
         ],
       ),
@@ -320,9 +214,7 @@ class _DeliveryState extends State<Delivery> {
           SizedBox(
             height: getHeight(10),
           ),
-          const Divider(
-            color: Color.fromRGBO(186, 186, 186, 0.5),
-          ),
+          divider(),
           SizedBox(
             height: getHeight(10),
           ),
@@ -376,7 +268,7 @@ class _DeliveryState extends State<Delivery> {
     );
   }
 
-  logoutAndSwitchAccCard() {
+  logoutAndSwitchAccTile() {
     return Container(
       margin: EdgeInsets.only(top: getHeight(22)),
       width: MediaQuery.of(context).size.width,
@@ -417,7 +309,7 @@ class _DeliveryState extends State<Delivery> {
           SizedBox(height: getHeight(10)),
           InkWell(
             onTap: () {
-              Get.to(() => LoginPage());
+              Get.to(() => const LoginPage());
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -442,6 +334,64 @@ class _DeliveryState extends State<Delivery> {
             ),
           ),
           SizedBox(height: getHeight(10)),
+        ],
+      ),
+    );
+  }
+
+  buildProfileTop() {
+    return Container(
+      //height: 283,
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(top: getHeight(35), bottom: getHeight(16)),
+      color: AppColors.mainGreen,
+      child: Column(
+        children: [
+          Image.asset(
+            'assets/images/profile.png',
+            height: getHeight(135),
+            width: getWidth(135),
+          ),
+          SizedBox(
+            height: getHeight(10),
+          ),
+          Text(
+            "Howard Wollowitz",
+            style: TextStyle(
+                fontSize: getFont(23),
+                color: AppColors.textGreen,
+                fontWeight: FontWeight.w700),
+          ),
+          Text(
+            "Mangalbazar, Lalitpur",
+            style: TextStyle(
+                fontSize: getFont(14),
+                color: AppColors.textGreen,
+                fontWeight: FontWeight.w400),
+          ),
+          SizedBox(
+            height: getHeight(22),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: const Color.fromRGBO(255, 255, 255, 0.5),
+                textStyle: TextStyle(
+                    fontSize: getFont(15),
+                    color: const Color.fromRGBO(2, 95, 51, 1))),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const DeliveryEditProfile()),
+              );
+            },
+            child: Text(
+              'Edit',
+              style: TextStyle(
+                  fontSize: getFont(15),
+                  color: const Color.fromRGBO(2, 95, 51, 1)),
+            ),
+          ),
         ],
       ),
     );
