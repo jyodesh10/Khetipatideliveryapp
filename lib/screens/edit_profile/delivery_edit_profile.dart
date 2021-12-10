@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
 import '../../constant/size_config.dart';
+import '../../theme.dart';
 
 class DeliveryEditProfile extends StatefulWidget {
   const DeliveryEditProfile({Key? key}) : super(key: key);
@@ -135,8 +136,10 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
               padding: EdgeInsets.only(left: getWidth(20)),
               child: Text(
                 'Change Password',
-                style: TextStyle(
-                    fontSize: getFont(18), fontWeight: FontWeight.w400),
+                style: archivotitleStyle.copyWith(
+                    color: Colors.black,
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w400),
               ),
             ),
             Padding(
@@ -173,8 +176,10 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
               padding: const EdgeInsets.only(left: 20),
               child: Text(
                 'Documents',
-                style: TextStyle(
-                    fontSize: getFont(18), fontWeight: FontWeight.w400),
+                style: archivotitleStyle.copyWith(
+                    color: Colors.black,
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w400),
               ),
             ),
             const Padding(
@@ -207,11 +212,14 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
           ),
           Text(
             "Change Profile Picture",
-            style: TextStyle(
+            style: archivotitleStyle.copyWith(
                 fontSize: getFont(16),
                 color: Colors.green[900],
                 fontWeight: FontWeight.normal),
           ),
+          SizedBox(
+            height: getHeight(20),
+          )
         ],
       ),
     );
@@ -235,7 +243,7 @@ void _settingModalBottomSheet(context) {
                   children: <Widget>[
                     Text(
                       'New Password must be different from current password.',
-                      style: TextStyle(
+                      style: archivotitleStyle.copyWith(
                           color: Colors.black,
                           fontSize: getFont(16),
                           fontWeight: FontWeight.w400),
@@ -244,7 +252,7 @@ void _settingModalBottomSheet(context) {
                     const MyInputField(hint: 'Current Password'),
                     Text(
                       'Forgot Password?',
-                      style: TextStyle(
+                      style: archivotitleStyle.copyWith(
                           color: const Color.fromRGBO(0, 0, 0, 0.5),
                           fontSize: getFont(12),
                           fontWeight: FontWeight.w400),
@@ -255,7 +263,7 @@ void _settingModalBottomSheet(context) {
                     const MyInputField(hint: 'New Password'),
                     Text(
                       'Must be 8 characters long.',
-                      style: TextStyle(
+                      style: archivotitleStyle.copyWith(
                           color: const Color.fromRGBO(0, 0, 0, 0.5),
                           fontSize: getFont(12),
                           fontWeight: FontWeight.w400),
@@ -266,7 +274,7 @@ void _settingModalBottomSheet(context) {
                     const MyInputField(hint: 'Confirm Password'),
                     Text(
                       'Must be 8 characters long.',
-                      style: TextStyle(
+                      style: archivotitleStyle.copyWith(
                           color: const Color.fromRGBO(0, 0, 0, 0.5),
                           fontSize: getFont(12),
                           fontWeight: FontWeight.w400),
@@ -284,7 +292,7 @@ void _settingModalBottomSheet(context) {
                         child: Center(
                           child: Text(
                             'Save Changes',
-                            style: TextStyle(
+                            style: archivotitleStyle.copyWith(
                                 color: Colors.white,
                                 fontSize: getFont(15),
                                 fontWeight: FontWeight.w500),

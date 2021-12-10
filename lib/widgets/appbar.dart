@@ -1,4 +1,5 @@
 import 'package:deliveryapp/constant/colors.dart';
+import 'package:deliveryapp/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ buildAppbar(IconData? icon, title) {
     ),
     title: Text(
       title,
-      style: TextStyle(
+      style: robototitleStyle.copyWith(
           fontSize: 22.sp,
           color: AppColors.textGreen,
           fontWeight: FontWeight.bold),

@@ -1,5 +1,6 @@
 import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/constant/size_config.dart';
+import 'package:deliveryapp/theme.dart';
 import 'package:deliveryapp/widgets/appbar.dart';
 import 'package:deliveryapp/widgets/divider.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class DeliveryOrders extends StatelessWidget {
                 children: [
                   Text(
                     itemName,
-                    style: TextStyle(
+                    style: archivotitleStyle.copyWith(
                         fontSize: getFont(16),
                         fontWeight: FontWeight.w500,
                         color: AppColors.textblack),
@@ -82,7 +83,7 @@ class DeliveryOrders extends StatelessWidget {
                   ),
                   Text(
                     'Dropoff: Baneshwor,\nKathmandu',
-                    style: TextStyle(
+                    style: archivotitleStyle.copyWith(
                         fontSize: getFont(12),
                         fontWeight: FontWeight.w400,
                         color: const Color.fromRGBO(0, 0, 0, 0.8)),
@@ -101,7 +102,7 @@ class DeliveryOrders extends StatelessWidget {
               ),
               Text(
                 '23 hrs ago',
-                style: TextStyle(
+                style: archivotitleStyle.copyWith(
                   fontSize: getFont(10),
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.8),
@@ -147,7 +148,7 @@ class DeliveryOrders extends StatelessWidget {
             child: TabBar(
               indicatorColor: AppColors.textGreen,
               indicatorSize: TabBarIndicatorSize.label,
-              labelStyle: TextStyle(
+              labelStyle: archivotitleStyle.copyWith(
                   fontSize: getFont(14),
                   color: Colors.green[900],
                   fontWeight: FontWeight.w500),

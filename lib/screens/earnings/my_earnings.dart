@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/constant/size_config.dart';
+import 'package:deliveryapp/theme.dart';
 import 'package:flutter/material.dart';
 
 class MyEarnings extends StatefulWidget {
@@ -19,37 +20,7 @@ class _MyEarningsState extends State<MyEarnings> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
-      appBar: AppBar(
-        toolbarHeight: getHeight(70),
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.mainGreen,
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          'My Earnings',
-          style: TextStyle(
-              fontSize: getFont(22),
-              color: AppColors.textGreen,
-              fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_rounded,
-              size: 20, color: AppColors.textGreen),
-        ),
-        actions: [
-          InkWell(
-            child: Image.asset(
-              'assets/icons/earningsmenu.png',
-            ),
-            onTap: () {
-              _settingModalBottomSheet(context);
-            },
-          ),
-        ],
-      ),
+      appBar: buildappBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -141,8 +112,8 @@ class _MyEarningsState extends State<MyEarnings> {
               CircleAvatar(
                   radius: 15,
                   child: Image.asset(
-                    'assets/icons/earnings.png',
-                    height: 15,
+                    'assets/icons/myEarnings.png',
+                    height: 20,
                     color: iconColor,
                   ),
                   backgroundColor: containerColor),
@@ -156,7 +127,7 @@ class _MyEarningsState extends State<MyEarnings> {
                     width: getWidth(170),
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: robototitleStyle.copyWith(
                           color: Colors.black,
                           fontSize: getFont(14),
                           fontWeight: FontWeight.w400),
@@ -169,8 +140,10 @@ class _MyEarningsState extends State<MyEarnings> {
                     width: getWidth(170),
                     child: Text(
                       detail,
-                      style: TextStyle(
-                          fontSize: getFont(12), fontWeight: FontWeight.w400),
+                      style: archivotitleStyle.copyWith(
+                          color: Colors.black,
+                          fontSize: getFont(12),
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                   SizedBox(
@@ -178,7 +151,7 @@ class _MyEarningsState extends State<MyEarnings> {
                   ),
                   Text(
                     '10 minutes ago',
-                    style: TextStyle(
+                    style: archivotitleStyle.copyWith(
                         color: AppColors.textblack,
                         fontSize: getFont(11),
                         fontWeight: FontWeight.w400),
@@ -189,7 +162,7 @@ class _MyEarningsState extends State<MyEarnings> {
           ),
           Text(
             'Rs. 55',
-            style: TextStyle(
+            style: robototitleStyle.copyWith(
                 fontSize: getFont(18),
                 fontWeight: FontWeight.w500,
                 color: AppColors.textGreen),
@@ -217,7 +190,7 @@ class _MyEarningsState extends State<MyEarnings> {
               children: [
                 Text(
                   'Rs.',
-                  style: TextStyle(
+                  style: robototitleStyle.copyWith(
                       fontSize: getFont(20),
                       fontWeight: FontWeight.w700,
                       color: AppColors.textGreen),
@@ -227,7 +200,7 @@ class _MyEarningsState extends State<MyEarnings> {
                 ),
                 Text(
                   "200.0",
-                  style: TextStyle(
+                  style: robototitleStyle.copyWith(
                       fontSize: getFont(25),
                       fontWeight: FontWeight.w700,
                       color: AppColors.textGreen),
@@ -236,7 +209,7 @@ class _MyEarningsState extends State<MyEarnings> {
             ),
             Text(
               'Total Withdrawn',
-              style: TextStyle(
+              style: robototitleStyle.copyWith(
                   fontSize: getFont(12),
                   fontWeight: FontWeight.w400,
                   color: AppColors.textGreen),
@@ -252,7 +225,7 @@ class _MyEarningsState extends State<MyEarnings> {
       padding: EdgeInsets.symmetric(vertical: getHeight(15)),
       child: Text(
         date,
-        style: TextStyle(
+        style: archivotitleStyle.copyWith(
             color: const Color.fromRGBO(0, 0, 0, 0.6),
             fontSize: getFont(14),
             fontWeight: FontWeight.w400),
@@ -277,7 +250,7 @@ class _MyEarningsState extends State<MyEarnings> {
                     children: <Widget>[
                       Text(
                         'Earnings Filter',
-                        style: TextStyle(
+                        style: archivotitleStyle.copyWith(
                             color: Colors.black,
                             fontSize: getFont(16),
                             fontWeight: FontWeight.w400),
@@ -292,7 +265,7 @@ class _MyEarningsState extends State<MyEarnings> {
                               children: [
                                 Text(
                                   'From',
-                                  style: TextStyle(
+                                  style: archivotitleStyle.copyWith(
                                       fontSize: getFont(16),
                                       fontWeight: FontWeight.w400,
                                       color:
@@ -332,7 +305,7 @@ class _MyEarningsState extends State<MyEarnings> {
                               children: [
                                 Text(
                                   'To',
-                                  style: TextStyle(
+                                  style: archivotitleStyle.copyWith(
                                       fontSize: getFont(16),
                                       fontWeight: FontWeight.w400,
                                       color:
@@ -369,56 +342,67 @@ class _MyEarningsState extends State<MyEarnings> {
                       ),
                       Text(
                         'status',
-                        style: TextStyle(
+                        style: archivotitleStyle.copyWith(
                             fontSize: getFont(16),
                             fontWeight: FontWeight.w400,
                             color: const Color.fromRGBO(0, 0, 0, 0.5)),
                       ),
                       InkWell(
                         child: Container(
-                          //   width: 352,
+                          width: 352,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: getWidth(10)),
                           height: getHeight(45),
                           decoration: BoxDecoration(
                             border: Border.all(
                                 width: 1,
                                 color: const Color.fromRGBO(0, 0, 0, 0.1)),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Text(
-                                //   dropdownValue,
-                                //   style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                // ),
-                                DropdownButton<String>(
-                                  items: <String>[
-                                    'All',
-                                    'Earnings',
-                                    'Withdrawn'
-                                  ].map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                  value: dropdownValue,
-                                  icon: const Icon(
-                                      Icons.keyboard_arrow_down_rounded),
-                                  onChanged: (String? newValue) async {
-                                    setState(() {
-                                      dropdownValue = newValue!;
-                                    });
-                                  },
-                                ),
-                                // Icon(
-                                //   Icons.keyboard_arrow_down_sharp,
-                                //   color: Color.fromRGBO(0, 0, 0, 0.6),
-                                // )
-                              ],
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: dropdownValue,
+                              items: <String>['All', 'Earnings', 'Withdrawn']
+                                  .map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: archivotitleStyle.copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color:
+                                            const Color.fromRGBO(0, 0, 0, 0.5)),
+                                  ),
+                                );
+                              }).toList(),
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
+                              },
                             ),
                           ),
+
+                          //  DropdownButton<String>(
+                          //   items:
+
+                          //    <String>['All', 'Earnings', 'Withdrawn']
+                          //       .map((String value) {
+                          //     return DropdownMenuItem<String>(
+                          //       value: value,
+                          //       child: Text(value),
+                          //     );
+                          //   }).toList(),
+                          //   value: dropdownValue,
+                          //   underline: ,
+                          //   icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                          //   onChanged: (String? newValue) async {
+                          //     setState(() {
+                          //       dropdownValue = newValue!;
+                          //     });
+                          //   },
+                          // ),
                         ),
                         onTap: () {},
                       ),
@@ -450,5 +434,44 @@ class _MyEarningsState extends State<MyEarnings> {
             ),
           );
         });
+  }
+
+  buildappBar() {
+    return AppBar(
+      toolbarHeight: getHeight(70),
+      automaticallyImplyLeading: false,
+      backgroundColor: AppColors.mainGreen,
+      centerTitle: true,
+      elevation: 0,
+      title: Text(
+        'My Earnings',
+        style: TextStyle(
+            fontSize: getFont(22),
+            color: AppColors.textGreen,
+            fontWeight: FontWeight.bold),
+      ),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.arrow_back_ios_rounded,
+            size: 20, color: AppColors.textGreen),
+      ),
+      actions: [
+        InkWell(
+          child: Container(
+            height: 20,
+            padding: const EdgeInsets.all(15),
+            child: Image.asset(
+              'assets/icons/earningsmenu.png',
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+          onTap: () {
+            _settingModalBottomSheet(context);
+          },
+        ),
+      ],
+    );
   }
 }

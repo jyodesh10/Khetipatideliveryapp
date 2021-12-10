@@ -10,6 +10,7 @@ import 'package:deliveryapp/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../theme.dart';
 import '../edit_profile/delivery_edit_profile.dart';
 
 class Delivery extends StatefulWidget {
@@ -46,6 +47,9 @@ class _DeliveryState extends State<Delivery> {
                 children: [
                   buildDeliveryProfileMenu(),
                   buildDeliveryPersonalInfoCard(),
+                  SizedBox(
+                    height: getHeight(20),
+                  ),
                   logoutAndSwitchAccTile(),
                 ],
               ),
@@ -74,6 +78,7 @@ class _DeliveryState extends State<Delivery> {
           ),
           Image.asset(
             optionIcon,
+            height: 20,
             // color: AppColors.mainGreen,
           ),
           SizedBox(
@@ -87,7 +92,7 @@ class _DeliveryState extends State<Delivery> {
                 children: [
                   Text(
                     subvalue,
-                    style: TextStyle(
+                    style: archivotitleStyle.copyWith(
                         fontSize: getFont(11),
                         fontWeight: FontWeight.w400,
                         color: AppColors.textGreen),
@@ -97,7 +102,7 @@ class _DeliveryState extends State<Delivery> {
                   ),
                   Text(
                     value,
-                    style: TextStyle(
+                    style: archivotitleStyle.copyWith(
                         fontSize: getFont(15),
                         fontWeight: FontWeight.w400,
                         color: AppColors.textGreen),
@@ -106,7 +111,7 @@ class _DeliveryState extends State<Delivery> {
               ),
               Text(
                 optionName,
-                style: TextStyle(
+                style: archivotitleStyle.copyWith(
                     fontSize: getFont(11),
                     fontWeight: FontWeight.w400,
                     color: const Color.fromRGBO(0, 0, 0, 0.6)),
@@ -208,15 +213,17 @@ class _DeliveryState extends State<Delivery> {
         children: [
           Text(
             'Personal Information',
-            style:
-                TextStyle(fontSize: getFont(18), fontWeight: FontWeight.w400),
+            style: archivotitleStyle.copyWith(
+                color: Colors.black,
+                fontSize: getFont(18),
+                fontWeight: FontWeight.w400),
           ),
           SizedBox(
-            height: getHeight(10),
+            height: getHeight(19),
           ),
           divider(),
           SizedBox(
-            height: getHeight(10),
+            height: getHeight(14),
           ),
           buildPersonalInfo('Name', "Sudarshan"),
           SizedBox(
@@ -251,8 +258,10 @@ class _DeliveryState extends State<Delivery> {
               left: getWidth(26),
             ),
             child: Text(options,
-                style: TextStyle(
-                    fontSize: getFont(16), fontWeight: FontWeight.w400)),
+                style: archivotitleStyle.copyWith(
+                    color: Colors.black,
+                    fontSize: getFont(16),
+                    fontWeight: FontWeight.w400)),
           ),
         ),
         SizedBox(width: getWidth(30)),
@@ -260,8 +269,10 @@ class _DeliveryState extends State<Delivery> {
           flex: 3,
           child: Text(
             answers,
-            style:
-                TextStyle(fontSize: getFont(16), fontWeight: FontWeight.w500),
+            style: archivotitleStyle.copyWith(
+                color: Colors.black,
+                fontSize: getFont(16),
+                fontWeight: FontWeight.w500),
           ),
         )
       ],
@@ -270,7 +281,7 @@ class _DeliveryState extends State<Delivery> {
 
   logoutAndSwitchAccTile() {
     return Container(
-      margin: EdgeInsets.only(top: getHeight(22)),
+      padding: EdgeInsets.symmetric(vertical: getHeight(18)),
       width: MediaQuery.of(context).size.width,
       // height: getHeight(111),
       decoration: BoxDecoration(
@@ -281,7 +292,6 @@ class _DeliveryState extends State<Delivery> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: getHeight(10)),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -290,7 +300,7 @@ class _DeliveryState extends State<Delivery> {
               ),
               Image.asset(
                 'assets/icons/switchacc.png',
-                height: 17,
+                height: 20,
               ),
               SizedBox(
                 width: getWidth(20),
@@ -304,9 +314,9 @@ class _DeliveryState extends State<Delivery> {
               )
             ],
           ),
-          SizedBox(height: getHeight(10)),
-          const Divider(),
-          SizedBox(height: getHeight(10)),
+          SizedBox(height: getHeight(18)),
+          divider(),
+          SizedBox(height: getHeight(18)),
           InkWell(
             onTap: () {
               Get.to(() => const LoginPage());
@@ -317,10 +327,9 @@ class _DeliveryState extends State<Delivery> {
                 SizedBox(
                   width: getWidth(20),
                 ),
-                const Icon(
-                  Icons.logout_outlined,
-                  size: 20,
-                  color: Color.fromRGBO(216, 47, 47, 1),
+                Image.asset(
+                  'assets/icons/logout.png',
+                  height: 20,
                 ),
                 SizedBox(
                   width: getWidth(20),
@@ -333,7 +342,6 @@ class _DeliveryState extends State<Delivery> {
               ],
             ),
           ),
-          SizedBox(height: getHeight(10)),
         ],
       ),
     );
@@ -357,14 +365,14 @@ class _DeliveryState extends State<Delivery> {
           ),
           Text(
             "Howard Wollowitz",
-            style: TextStyle(
+            style: robototitleStyle.copyWith(
                 fontSize: getFont(23),
                 color: AppColors.textGreen,
                 fontWeight: FontWeight.w700),
           ),
           Text(
             "Mangalbazar, Lalitpur",
-            style: TextStyle(
+            style: archivotitleStyle.copyWith(
                 fontSize: getFont(14),
                 color: AppColors.textGreen,
                 fontWeight: FontWeight.w400),
@@ -387,7 +395,7 @@ class _DeliveryState extends State<Delivery> {
             },
             child: Text(
               'Edit',
-              style: TextStyle(
+              style: archivotitleStyle.copyWith(
                   fontSize: getFont(15),
                   color: const Color.fromRGBO(2, 95, 51, 1)),
             ),

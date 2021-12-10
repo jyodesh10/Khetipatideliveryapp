@@ -17,7 +17,7 @@ class _EditDocumentsState extends State<EditDocuments> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
-      appBar: buildAppbar(Icons.arrow_back, 'Edit Profile'),
+      appBar: buildAppbar(Icons.arrow_back_ios, 'Edit Profile'),
       body: SingleChildScrollView(
         child: Column(
           children: [buildEditDocumentsBody()],
