@@ -28,7 +28,7 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
             Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
-                  color: AppColors.mainGrey,
+                  color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(30),
                     topLeft: Radius.circular(30),
@@ -125,10 +125,9 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
         height: getHeight(45),
         //  width: getWidth(352),
         decoration: BoxDecoration(
-          border:
-              Border.all(width: 1, color: const Color.fromRGBO(0, 0, 0, 0.1)),
-          color: AppColors.mainGrey,
-        ),
+            border:
+                Border.all(width: 1, color: const Color.fromRGBO(0, 0, 0, 0.1)),
+            color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -165,10 +164,9 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
         height: getHeight(45),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          border:
-              Border.all(width: 1, color: const Color.fromRGBO(0, 0, 0, 0.1)),
-          color: AppColors.mainGrey,
-        ),
+            border:
+                Border.all(width: 1, color: const Color.fromRGBO(0, 0, 0, 0.1)),
+            color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

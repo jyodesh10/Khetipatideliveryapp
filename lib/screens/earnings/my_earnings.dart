@@ -1,5 +1,7 @@
 import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/constant/size_config.dart';
+import 'package:deliveryapp/screens/earnings/widgets/bottomsheet.dart';
+import 'package:deliveryapp/screens/earnings/widgets/earnings_card.dart';
 import 'package:deliveryapp/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -11,161 +13,94 @@ class MyEarnings extends StatefulWidget {
 }
 
 class _MyEarningsState extends State<MyEarnings> {
-  List status = ['All', 'Earnings', 'Withdrawn'];
-  String dropdownValue = 'All';
+  bool withdrawn = true;
+
+  void isWithdrawn() {
+    setState(() {
+      withdrawn = !withdrawn;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
       appBar: buildappBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              // height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(
-                  horizontal: getWidth(27), vertical: getHeight(22)),
-              decoration: const BoxDecoration(
-                color: AppColors.mainGrey,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30),
-                  topLeft: Radius.circular(30),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildEarningsCard(),
-                  buildDate('Today'),
-                  buildEarningsHistoryCard(
-                      'Earned while Delivering from Shankhamul to Satdobato',
-                      'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
-                      const Color.fromRGBO(2, 95, 51, 1),
-                      const Color.fromRGBO(135, 194, 65, 0.5)),
-                  buildDate('Yesterday'),
-                  buildEarningsHistoryCard(
-                      'Withdrawn Amount',
-                      'Balance: 250.55',
-                      const Color.fromRGBO(216, 47, 47, 1),
-                      const Color.fromRGBO(216, 47, 47, 0.2)),
-                  SizedBox(
-                    height: getHeight(15),
-                  ),
-                  buildEarningsHistoryCard(
-                      'Earned while Delivering from Shankhamul to Satdobato',
-                      'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
-                      const Color.fromRGBO(2, 95, 51, 1),
-                      const Color.fromRGBO(135, 194, 65, 0.5)),
-                  SizedBox(
-                    height: getHeight(15),
-                  ),
-                  buildEarningsHistoryCard(
-                      'Withdrawn Amount',
-                      'Balance: 250.55',
-                      const Color.fromRGBO(216, 47, 47, 1),
-                      const Color.fromRGBO(216, 47, 47, 0.2)),
-                  buildDate('15th Aug. 2021'),
-                  buildEarningsHistoryCard(
-                      'Earned while Delivering from Shankhamul to Satdobato',
-                      'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
-                      const Color.fromRGBO(2, 95, 51, 1),
-                      const Color.fromRGBO(135, 194, 65, 0.5)),
-                  SizedBox(
-                    height: getHeight(15),
-                  ),
-                  buildEarningsHistoryCard(
-                      'Withdrawn Amount',
-                      'Balance: 250.55',
-                      const Color.fromRGBO(216, 47, 47, 1),
-                      const Color.fromRGBO(216, 47, 47, 0.2)),
-                  SizedBox(
-                    height: getHeight(15),
-                  ),
-                ],
-              ),
-            )
-          ],
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: getWidth(27)),
+        decoration: const BoxDecoration(
+          color: AppColors.mainGrey,
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),
+          ),
         ),
-      ),
-    );
-  }
-
-  buildEarningsHistoryCard(title, detail, iconColor, containerColor) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      //height: 154,
-      padding: EdgeInsets.symmetric(
-          horizontal: getWidth(20), vertical: getHeight(20)),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                  radius: 15,
-                  child: Image.asset(
-                    'assets/icons/myEarnings.png',
-                    height: 20,
-                    color: iconColor,
-                  ),
-                  backgroundColor: containerColor),
-              SizedBox(
-                width: getWidth(10),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: getWidth(170),
-                    child: Text(
-                      title,
-                      style: robototitleStyle.copyWith(
-                          color: Colors.black,
-                          fontSize: getFont(14),
-                          fontWeight: FontWeight.w400),
+        child: SingleChildScrollView(
+          child: withdrawn
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: getHeight(22),
                     ),
-                  ),
-                  SizedBox(
-                    height: getHeight(15),
-                  ),
-                  SizedBox(
-                    width: getWidth(170),
-                    child: Text(
-                      detail,
-                      style: archivotitleStyle.copyWith(
-                          color: Colors.black,
-                          fontSize: getFont(12),
-                          fontWeight: FontWeight.w400),
+                    buildEarningsCard(),
+                    buildDate('Today'),
+                    buildEarningsHistoryCard(
+                        'Earned while Delivering from Shankhamul to Satdobato',
+                        'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
+                        false),
+                    buildDate('Yesterday'),
+                    buildEarningsHistoryCard(
+                        'Withdrawn Amount', 'Balance: 250.55', true),
+                    SizedBox(
+                      height: getHeight(15),
                     ),
-                  ),
-                  SizedBox(
-                    height: getHeight(15),
-                  ),
-                  Text(
-                    '10 minutes ago',
-                    style: archivotitleStyle.copyWith(
-                        color: AppColors.textblack,
-                        fontSize: getFont(11),
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Text(
-            'Rs. 55',
-            style: robototitleStyle.copyWith(
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w500,
-                color: AppColors.textGreen),
-          ),
-        ],
+                    buildEarningsHistoryCard(
+                        'Earned while Delivering from Shankhamul to Satdobato',
+                        'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
+                        false),
+                    SizedBox(
+                      height: getHeight(15),
+                    ),
+                    buildEarningsHistoryCard(
+                        'Withdrawn Amount', 'Balance: 250.55', true),
+                    buildDate('15th Aug. 2021'),
+                    buildEarningsHistoryCard(
+                        'Earned while Delivering from Shankhamul to Satdobato',
+                        'Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone. Grab the offer before its gone.',
+                        false),
+                    SizedBox(
+                      height: getHeight(15),
+                    ),
+                    buildEarningsHistoryCard(
+                        'Withdrawn Amount', 'Balance: 250.55', true),
+                    SizedBox(
+                      height: getHeight(15),
+                    ),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildEarningsCard(),
+                    buildDate('Today'),
+                    buildEarningsHistoryCard(
+                        'Withdrawn Amount', 'Balance: 250.55', true),
+                    buildDate('Yesterday'),
+                    buildEarningsHistoryCard(
+                        'Withdrawn Amount', 'Balance: 250.55', true),
+                    SizedBox(
+                      height: getHeight(15),
+                    ),
+                    buildEarningsHistoryCard(
+                        'Withdrawn Amount', 'Balance: 250.55', true),
+                    buildDate('15th Aug. 2021'),
+                    buildEarningsHistoryCard(
+                        'Withdrawn Amount', 'Balance: 250.55', true),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -231,209 +166,6 @@ class _MyEarningsState extends State<MyEarnings> {
     );
   }
 
-  _settingModalBottomSheet(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SingleChildScrollView(
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: getWidth(30), vertical: getWidth(30)),
-              child: Column(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Earnings Filter',
-                        style: archivotitleStyle.copyWith(
-                            color: Colors.black,
-                            fontSize: getFont(16),
-                            fontWeight: FontWeight.w400),
-                      ),
-                      SizedBox(height: getHeight(15)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'From',
-                                  style: archivotitleStyle.copyWith(
-                                      fontSize: getFont(16),
-                                      fontWeight: FontWeight.w400,
-                                      color:
-                                          const Color.fromRGBO(0, 0, 0, 0.5)),
-                                ),
-                                SizedBox(
-                                  height: getHeight(45),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: '2021-01-01',
-                                        //hintText: "Full Name",
-
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1,
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1)),
-                                          // borderRadius: BorderRadius.circular(15),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1, color: Colors.red),
-                                          borderRadius:
-                                              BorderRadius.circular(0),
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: getWidth(10),
-                          ),
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'To',
-                                  style: archivotitleStyle.copyWith(
-                                      fontSize: getFont(16),
-                                      fontWeight: FontWeight.w400,
-                                      color:
-                                          const Color.fromRGBO(0, 0, 0, 0.5)),
-                                ),
-                                SizedBox(
-                                  height: getHeight(45),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: '2021-01-01',
-                                        //hintText: "Full Name",
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1,
-                                              color:
-                                                  Color.fromRGBO(0, 0, 0, 0.1)),
-                                          // borderRadius: BorderRadius.circular(15),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1, color: Colors.red),
-                                          borderRadius:
-                                              BorderRadius.circular(0),
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: getHeight(15),
-                      ),
-                      Text(
-                        'status',
-                        style: archivotitleStyle.copyWith(
-                            fontSize: getFont(16),
-                            fontWeight: FontWeight.w400,
-                            color: const Color.fromRGBO(0, 0, 0, 0.5)),
-                      ),
-                      InkWell(
-                        child: Container(
-                          width: 352,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: getWidth(10)),
-                          height: getHeight(45),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1,
-                                color: const Color.fromRGBO(0, 0, 0, 0.1)),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              value: dropdownValue,
-                              items: <String>['All', 'Earnings', 'Withdrawn']
-                                  .map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: archivotitleStyle.copyWith(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color:
-                                            const Color.fromRGBO(0, 0, 0, 0.5)),
-                                  ),
-                                );
-                              }).toList(),
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValue = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-
-                          //  DropdownButton<String>(
-                          //   items:
-
-                          //    <String>['All', 'Earnings', 'Withdrawn']
-                          //       .map((String value) {
-                          //     return DropdownMenuItem<String>(
-                          //       value: value,
-                          //       child: Text(value),
-                          //     );
-                          //   }).toList(),
-                          //   value: dropdownValue,
-                          //   underline: ,
-                          //   icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                          //   onChanged: (String? newValue) async {
-                          //     setState(() {
-                          //       dropdownValue = newValue!;
-                          //     });
-                          //   },
-                          // ),
-                        ),
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: getHeight(20),
-                      ),
-                      ButtonTheme(
-                        minWidth: getWidth(200),
-                        height: getHeight(48),
-                        // ignore: deprecated_member_use
-                        child: RaisedButton(
-                          color: AppColors.mainGreen,
-                          onPressed: () {},
-                          child: Center(
-                            child: Text(
-                              'Search',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: getFont(15),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
   buildappBar() {
     return AppBar(
       toolbarHeight: getHeight(70),
@@ -466,7 +198,7 @@ class _MyEarningsState extends State<MyEarnings> {
             ),
           ),
           onTap: () {
-            _settingModalBottomSheet(context);
+            buildModalBottomSheet(context);
           },
         ),
       ],

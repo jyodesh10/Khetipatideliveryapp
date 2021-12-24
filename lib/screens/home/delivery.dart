@@ -378,24 +378,25 @@ class _DeliveryState extends State<Delivery> {
           SizedBox(
             height: getHeight(22),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(255, 255, 255, 0.5),
-                textStyle: TextStyle(
-                    fontSize: getFont(15),
-                    color: const Color.fromRGBO(2, 95, 51, 1))),
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const DeliveryEditProfile()),
               );
             },
-            child: Text(
-              'Edit',
-              style: archivotitleStyle.copyWith(
-                  fontSize: getFont(15),
-                  color: const Color.fromRGBO(2, 95, 51, 1)),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: const Color.fromRGBO(255, 255, 255, 0.5)),
+              child: Text(
+                'Edit',
+                style: archivotitleStyle.copyWith(
+                    fontSize: getFont(15),
+                    color: const Color.fromRGBO(2, 95, 51, 1)),
+              ),
             ),
           ),
         ],
