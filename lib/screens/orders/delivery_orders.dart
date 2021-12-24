@@ -145,7 +145,16 @@ class DeliveryOrders extends StatelessWidget {
           SizedBox(
             // width: MediaQuery.of(context).size.width * 0.9,
             height: getHeight(40),
-            child: TabBar(
+            child:
+                // Row(
+                //   children: [Text(
+                //     'Orders Completed'
+                //   ),Text(
+                //     'Orders Pending'
+                //   )],
+                // )
+
+                TabBar(
               indicatorColor: AppColors.textGreen,
               indicatorSize: TabBarIndicatorSize.label,
               labelStyle: archivotitleStyle.copyWith(
@@ -167,14 +176,22 @@ class DeliveryOrders extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.zero,
-            height: 700,
+            height: 1000,
             //width: 350,
             child: TabBarView(
-              physics:
-                  const ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              // physics: const NeverScrollableScrollPhysics(),
               children: [
+                // ...List.generate(
+                //     10,
+                //     (index) => buildOrderItemsTile(
+                //         'assets/images/items/grapes.png',
+                //         'Cherry',
+                //         'Delivered',
+                //         const Color.fromRGBO(135, 194, 65, 0.2))),
                 ListView.separated(
+                  shrinkWrap: true,
                   itemCount: 10,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, i) {
                     return buildOrderItemsTile(
                         'assets/images/items/grapes.png',
@@ -186,8 +203,11 @@ class DeliveryOrders extends StatelessWidget {
                     return divider();
                   },
                 ),
+
                 ListView.separated(
+                  shrinkWrap: false,
                   itemCount: 10,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, i) {
                     return buildOrderItemsTile(
                         'assets/images/items/melons.png',

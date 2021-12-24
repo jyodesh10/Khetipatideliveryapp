@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:deliveryapp/screens/orders/delivery_orders.dart';
 import 'package:deliveryapp/screens/earnings/my_earnings.dart';
 import 'package:deliveryapp/constant/colors.dart';

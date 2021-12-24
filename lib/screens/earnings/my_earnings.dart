@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/constant/size_config.dart';
 import 'package:deliveryapp/theme.dart';
