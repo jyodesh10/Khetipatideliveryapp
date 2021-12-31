@@ -1,3 +1,4 @@
+import 'package:deliveryapp/screens/home/delivery.dart';
 import 'package:deliveryapp/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:deliveryapp/constant/colors.dart';
@@ -26,7 +27,7 @@ class RegisterPage extends StatelessWidget {
         ),
         leading: IconButton(
             onPressed: () {
-              Get.to(const LoginPage());
+              Get.to(LoginPage());
             },
             icon: Icon(Icons.arrow_back_ios_rounded,
                 size: 20.sp, color: AppColors.textGreen)),
@@ -220,7 +221,9 @@ class RegisterPage extends StatelessWidget {
       height: 50.h,
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.to(Delivery());
+        },
         child: Text(
           'Submit',
           style: TextStyle(
@@ -254,7 +257,7 @@ class RegisterPage extends StatelessWidget {
         ),
         TextButton(
             onPressed: () {
-              Get.to(const LoginPage());
+              Get.to(LoginPage());
             },
             child: Text(
               'Login',

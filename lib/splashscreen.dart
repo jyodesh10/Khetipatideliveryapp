@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(milliseconds: 2000), () {
       // set your desired delay time here
-      Get.to(const LoginPage());
+      Get.to(LoginPage());
     });
   }
 

@@ -1,3 +1,4 @@
+import 'package:deliveryapp/controllers/profile_controller.dart';
 import 'package:deliveryapp/screens/edit_document/edit_documents.dart';
 import 'package:deliveryapp/widgets/appbar.dart';
 import 'package:deliveryapp/widgets/text_field.dart';
@@ -9,13 +10,24 @@ import '../../constant/size_config.dart';
 import '../../theme.dart';
 
 class DeliveryEditProfile extends StatefulWidget {
-  const DeliveryEditProfile({Key? key}) : super(key: key);
-
   @override
-  _DeliveryEditProfileState createState() => _DeliveryEditProfileState();
+  State<DeliveryEditProfile> createState() => _DeliveryEditProfileState();
 }
 
 class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
+  ProfileController controller = Get.put(ProfileController());
+
+  TextEditingController name = TextEditingController();
+
+  TextEditingController address = TextEditingController();
+
+  TextEditingController phone = TextEditingController();
+
+  TextEditingController email = TextEditingController();
+
+  TextEditingController dob = TextEditingController();
+
+  TextEditingController gender = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,38 +62,44 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
           SizedBox(
             height: getHeight(30),
           ),
-          const MyInputField(
+          MyInputField(
             hint: 'Full Name',
+            controller: name,
           ),
           SizedBox(
             height: getHeight(30),
           ),
-          const MyInputField(
+          MyInputField(
             hint: 'Address',
+            controller: address,
           ),
           SizedBox(
             height: getHeight(30),
           ),
-          const MyInputField(
+          MyInputField(
             hint: 'Phone Number',
+            controller: phone,
           ),
           SizedBox(
             height: getHeight(30),
           ),
-          const MyInputField(
+          MyInputField(
             hint: 'Email',
+            controller: email,
           ),
           SizedBox(
             height: getHeight(30),
           ),
-          const MyInputField(
+          MyInputField(
             hint: 'Date of Birth',
+            controller: dob,
           ),
           SizedBox(
             height: getHeight(30),
           ),
-          const MyInputField(
+          MyInputField(
             hint: 'Gender',
+            controller: gender,
           ),
           SizedBox(
             height: getHeight(30),
@@ -100,7 +118,9 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
             // ignore: deprecated_member_use
             child: RaisedButton(
               color: AppColors.mainGreen,
-              onPressed: () {},
+              onPressed: () {
+                controller.edit_profile();
+              },
               child: Text(
                 'Save Changes',
                 style: TextStyle(
@@ -109,7 +129,10 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
                     fontWeight: FontWeight.w500),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: getHeight(30),
+          ),
         ],
       )),
     );

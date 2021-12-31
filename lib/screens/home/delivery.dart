@@ -1,3 +1,5 @@
+import 'package:deliveryapp/controllers/dashboard_controller.dart';
+import 'package:deliveryapp/models/dashboard.dart';
 import 'package:deliveryapp/screens/orders/delivery_orders.dart';
 import 'package:deliveryapp/screens/earnings/my_earnings.dart';
 import 'package:deliveryapp/constant/colors.dart';
@@ -11,14 +13,12 @@ import 'package:get/get.dart';
 import '../../theme.dart';
 import '../edit_profile/delivery_edit_profile.dart';
 
-class Delivery extends StatefulWidget {
-  const Delivery({Key? key}) : super(key: key);
+class Delivery extends StatelessWidget {
+  final DashboardController controller = Get.put(DashboardController());
+  late Future<Dashboarddetails> futureAlbum;
 
-  @override
-  _DeliveryState createState() => _DeliveryState();
-}
+  Delivery({Key? key}) : super(key: key);
 
-class _DeliveryState extends State<Delivery> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _DeliveryState extends State<Delivery> {
               child: Column(
                 children: [
                   buildDeliveryProfileMenu(),
-                  buildDeliveryPersonalInfoCard(),
+                  buildDeliveryPersonalInfoCard(context),
                   SizedBox(
                     height: getHeight(20),
                   ),
@@ -58,7 +58,7 @@ class _DeliveryState extends State<Delivery> {
     );
   }
 
-  profileOptions(optionIcon, optionName, subvalue, value) {
+  profileOptions(optionIcon, optionName, subvalue, String? value) {
     return Container(
       width: getWidth(140),
       height: getHeight(57),
@@ -99,7 +99,7 @@ class _DeliveryState extends State<Delivery> {
                     width: getWidth(5),
                   ),
                   Text(
-                    value,
+                    value!,
                     style: archivotitleStyle.copyWith(
                         fontSize: getFont(15),
                         fontWeight: FontWeight.w400,
@@ -125,123 +125,149 @@ class _DeliveryState extends State<Delivery> {
   }
 
   buildDeliveryProfileMenu() {
-    return Container(
-      //  width: MediaQuery.of(context).size.width,
-      // height: 170,
-      padding: EdgeInsets.symmetric(
-          horizontal: getWidth(18), vertical: getHeight(20)),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // SizedBox(
-          //   height: MediaQuery.of(context).size.height * 0.035,
-          // ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
-                mouseCursor: SystemMouseCursors.click,
-                onTap: () {
-                  Get.to(const MyEarnings());
-                },
-                child: profileOptions('assets/icons/myEarnings.png',
-                    'My Earnings', 'Rs', '150.55'),
-              ),
-              SizedBox(
-                width: getWidth(13),
-              ),
-              InkWell(
-                onTap: () {
-                  Get.to(const DeliveryOrders());
-                },
-                child: profileOptions(
-                    'assets/icons/checked.png', 'Orders Completed', '', '50'),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getHeight(13),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  Get.to(const DeliveryOrders());
-                },
-                child: profileOptions(
-                    'assets/icons/pending.png', 'Orders Pending', '', '10'),
-              ),
-              SizedBox(
-                width: getWidth(13),
-              ),
-              InkWell(
-                onTap: () {
-                  Get.to(const MyEarnings());
-                },
-                child: profileOptions('assets/icons/withdrawn.png',
-                    'Amount Withdrawn', 'Rs', '100'),
-              ),
-            ],
-          ),
-        ],
+    // final DashboardController controller = Get.put(DashboardController());
+    //var details = Dashboarddetails();
+    return Obx(
+      () =>
+          // controller.isloading.isFalse
+          //     ? SizedBox(
+          //         height: getHeight(200),
+          //         child: const Center(
+          //           child: Text('No data'),
+          //         ),
+          //       )
+          //     :
+          Container(
+        //  width: MediaQuery.of(context).size.width,
+        // height: 170,
+        padding: EdgeInsets.symmetric(
+            horizontal: getWidth(18), vertical: getHeight(20)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height * 0.035,
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  mouseCursor: SystemMouseCursors.click,
+                  onTap: () {
+                    Get.to(const MyEarnings());
+                  },
+                  child: profileOptions(
+                      'assets/icons/myEarnings.png',
+                      'My Earnings',
+                      'Rs',
+                      '${controller.dashboarddetail.value.earnings}'),
+                ),
+                SizedBox(
+                  width: getWidth(13),
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.to(DeliveryOrders());
+                  },
+                  child: profileOptions(
+                      'assets/icons/checked.png',
+                      'Orders Completed',
+                      '',
+                      '${controller.dashboarddetail.value.totalorderscompleted}'),
+                )
+              ],
+            ),
+            SizedBox(
+              height: getHeight(13),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.to(DeliveryOrders());
+                  },
+                  child: profileOptions(
+                      'assets/icons/pending.png',
+                      'Orders Pending',
+                      '',
+                      '${controller.dashboarddetail.value.totalorderspending}'),
+                ),
+                SizedBox(
+                  width: getWidth(13),
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.to(const MyEarnings());
+                  },
+                  child: profileOptions('assets/icons/withdrawn.png',
+                      'Amount Withdrawn', 'Rs', '100'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  buildDeliveryPersonalInfoCard() {
+  buildDeliveryPersonalInfoCard(context) {
+    // var personalinfo = User();
+    var user = controller.dashboarddetail.value.user!;
     return Container(
-      margin: EdgeInsets.only(top: getHeight(22)),
-      padding: EdgeInsets.only(top: getHeight(18)),
-      width: MediaQuery.of(context).size.width,
-      //height: getHeight(271),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Personal Information',
-            style: archivotitleStyle.copyWith(
-                color: Colors.black,
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w400),
-          ),
-          SizedBox(
-            height: getHeight(19),
-          ),
-          divider(),
-          SizedBox(
-            height: getHeight(14),
-          ),
-          buildPersonalInfo('Name', "Sudarshan"),
-          SizedBox(
-            height: getHeight(29),
-          ),
-          buildPersonalInfo('Adress', 'Sankhamul, Kathmandu'),
-          SizedBox(
-            height: getHeight(29),
-          ),
-          buildPersonalInfo('Phone No.', "981284882"),
-          SizedBox(
-            height: getHeight(29),
-          ),
-          buildPersonalInfo('Email', "sudarshan@gmail.com"),
-          SizedBox(
-            height: getHeight(20),
-          ),
-        ],
-      ),
-    );
+        margin: EdgeInsets.only(top: getHeight(22)),
+        padding: EdgeInsets.only(top: getHeight(18)),
+        width: double.infinity,
+        //height: getHeight(271),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Personal Information',
+              style: archivotitleStyle.copyWith(
+                  color: Colors.black,
+                  fontSize: getFont(18),
+                  fontWeight: FontWeight.w400),
+            ),
+            SizedBox(
+              height: getHeight(19),
+            ),
+            divider(),
+            SizedBox(
+              height: getHeight(14),
+            ),
+            buildPersonalInfo('Name',
+                '${user.firstname} ${controller.dashboarddetail.value.user?.lastname}'),
+            SizedBox(
+              height: getHeight(29),
+            ),
+            buildPersonalInfo('Address', 'KTm'),
+            SizedBox(
+              height: getHeight(29),
+            ),
+            buildPersonalInfo(
+                'Phone No.', "${controller.dashboarddetail.value.user?.phone}"),
+            SizedBox(
+              height: getHeight(29),
+            ),
+            buildPersonalInfo(
+                'Email', "${controller.dashboarddetail.value.user?.email}"),
+            SizedBox(
+              height: getHeight(20),
+            ),
+          ],
+        ));
   }
 
   buildPersonalInfo(options, answers) {
@@ -280,7 +306,7 @@ class _DeliveryState extends State<Delivery> {
   logoutAndSwitchAccTile() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: getHeight(18)),
-      width: MediaQuery.of(context).size.width,
+      width: double.infinity,
       // height: getHeight(111),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -317,7 +343,7 @@ class _DeliveryState extends State<Delivery> {
           SizedBox(height: getHeight(18)),
           InkWell(
             onTap: () {
-              Get.to(() => const LoginPage());
+              Get.to(() => LoginPage());
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -346,14 +372,16 @@ class _DeliveryState extends State<Delivery> {
   }
 
   buildProfileTop() {
+    var user = controller.dashboarddetail.value.user!;
     return Container(
       //height: 283,
-      width: MediaQuery.of(context).size.width,
+      width: double.infinity,
       padding: EdgeInsets.only(top: getHeight(35), bottom: getHeight(16)),
       color: AppColors.mainGreen,
       child: Column(
         children: [
           Image.asset(
+            // '${controller.dashboarddetail.value.user?.image}'
             'assets/images/profile.png',
             height: getHeight(135),
             width: getWidth(135),
@@ -362,7 +390,8 @@ class _DeliveryState extends State<Delivery> {
             height: getHeight(10),
           ),
           Text(
-            "Howard Wollowitz",
+            // controller.dashboarddetail.elementAt(1).user!.firstname.toString(),
+            "${user.firstname} ${controller.dashboarddetail.value.user!.lastname}",
             style: robototitleStyle.copyWith(
                 fontSize: getFont(23),
                 color: AppColors.textGreen,
@@ -380,11 +409,7 @@ class _DeliveryState extends State<Delivery> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const DeliveryEditProfile()),
-              );
+              Get.to(DeliveryEditProfile());
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),

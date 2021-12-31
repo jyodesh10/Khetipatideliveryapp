@@ -1,12 +1,16 @@
 import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/constant/size_config.dart';
+import 'package:deliveryapp/screens/orders/test/product_controller.dart';
 import 'package:deliveryapp/theme.dart';
 import 'package:deliveryapp/widgets/appbar.dart';
 import 'package:deliveryapp/widgets/divider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DeliveryOrders extends StatelessWidget {
-  const DeliveryOrders({Key? key}) : super(key: key);
+  DeliveryOrders({Key? key}) : super(key: key);
+
+  final ProductController controller = Get.put(ProductController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +65,7 @@ class DeliveryOrders extends StatelessWidget {
                 height: getHeight(71),
                 child: Image.asset(
                   wishlistItemImg,
-                  fit: BoxFit.contain,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               SizedBox(
@@ -188,21 +192,24 @@ class DeliveryOrders extends StatelessWidget {
                 //         'Cherry',
                 //         'Delivered',
                 //         const Color.fromRGBO(135, 194, 65, 0.2))),
-                ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, i) {
-                    return buildOrderItemsTile(
-                        'assets/images/items/grapes.png',
-                        'Cherry',
-                        'Delivered',
-                        const Color.fromRGBO(135, 194, 65, 0.2));
-                  },
-                  separatorBuilder: (context, index) {
-                    return divider();
-                  },
-                ),
+                Obx(() => controller.isLoading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: controller.productList.length,
+                        //  physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, i) {
+                          return buildOrderItemsTile(
+                              // controller.productList[i].imageLink,
+                              'assets/images/items/melons.png',
+                              controller.productList[i].name,
+                              'Delivered',
+                              const Color.fromRGBO(135, 194, 65, 0.2));
+                        },
+                        separatorBuilder: (context, index) {
+                          return divider();
+                        },
+                      )),
 
                 ListView.separated(
                   shrinkWrap: false,
