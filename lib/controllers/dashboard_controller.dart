@@ -1,18 +1,16 @@
-import 'dart:convert';
-
-import 'package:deliveryapp/constant/api.dart';
 import 'package:deliveryapp/controllers/auth_controller.dart';
 import 'package:deliveryapp/models/dashboard.dart';
+import 'package:deliveryapp/models/edit_profile.dart';
 import 'package:deliveryapp/services/daskboard_service.dart';
-import 'package:flutter/material.dart';
+import 'package:deliveryapp/services/profile_service.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class DashboardController extends GetxController {
   static DashboardController instance = Get.find();
 
   // var dashboarddetails = <Dashboarddetails>[].obs;
   var dashboarddetail = Dashboarddetails().obs;
+  var profiledata = EditProfile().obs;
   var isloading = true.obs;
 
   final count = 0.obs;
@@ -20,7 +18,7 @@ class DashboardController extends GetxController {
   @override
   void onInit() {
     fetchDashboardDetails();
-    // fetchDetails();
+    fetchDetails();
 
     super.onInit();
   }
@@ -40,12 +38,15 @@ class DashboardController extends GetxController {
     }
   }
 
-  // fetchDetails() async {
-  //   var details =
-  //       await DashboardApi().dashboardDetails(authController.token.value);
-  //   dashboarddetail = details;
-  //   print(dashboarddetail);
-  // }
+  fetchDetails() async {
+    var details =
+        await ProfileApi().fetchProfiledata(authController.token.value);
+
+    if (details != null) {
+      profiledata.value = details;
+    }
+    print(profiledata.toJson().toString());
+  }
 
   @override
   void onReady() {

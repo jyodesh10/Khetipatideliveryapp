@@ -1,5 +1,6 @@
 import 'package:deliveryapp/models/user.dart';
 import 'package:deliveryapp/screens/home/delivery.dart';
+import 'package:deliveryapp/screens/home/home.dart';
 import 'package:deliveryapp/services/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class AuthController extends GetxController {
       token.value = user[1];
       authState.value = AuthState.Authenticated;
       print(token.value);
-      Get.to(() => Delivery());
+      Get.to(() => HomeScreen());
     } else {
       const SnackBar(
         content: Text('Error login'),

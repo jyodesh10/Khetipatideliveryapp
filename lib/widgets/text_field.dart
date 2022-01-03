@@ -9,13 +9,15 @@ class MyInputField extends StatelessWidget {
   final TextEditingController? controller;
   final Widget? widget;
   final bool? ismultiline;
+  final bool? obscuretext;
 
   const MyInputField(
       {Key? key,
       required this.hint,
       this.controller,
       this.widget,
-      this.ismultiline = false})
+      this.ismultiline = false,
+      this.obscuretext = false})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,6 @@ class MyInputField extends StatelessWidget {
 
                 readOnly: widget == null ? false : true,
                 autofocus: false,
-
                 cursorColor:
                     Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
                 controller: controller,

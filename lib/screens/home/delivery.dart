@@ -1,3 +1,4 @@
+import 'package:deliveryapp/constant/api.dart';
 import 'package:deliveryapp/controllers/dashboard_controller.dart';
 import 'package:deliveryapp/models/dashboard.dart';
 import 'package:deliveryapp/screens/orders/delivery_orders.dart';
@@ -55,6 +56,85 @@ class Delivery extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  buildProfileTop() {
+    var user = controller.dashboarddetail.value.user;
+    var profile = controller.profiledata.value.data;
+    return
+        // Obx(() =>
+        Container(
+      //height: 283,
+      width: double.infinity,
+      padding: EdgeInsets.only(top: getHeight(35), bottom: getHeight(16)),
+      color: AppColors.mainGreen,
+      child: Column(
+        children: [
+          user?.image != null
+              ? CircleAvatar(
+                  radius: 62,
+                  child: CircleAvatar(
+                    radius: 60,
+                    child: ClipOval(
+                      child: Image.network(
+                          Url.base + '/' + user!.image.toString()),
+                    ),
+                  ),
+                )
+              : Image.asset(
+                  // '${controller.dashboarddetail.value.user?.image}'
+                  'assets/images/profile.png',
+                  height: getHeight(135),
+                  width: getWidth(135),
+                ),
+          SizedBox(
+            height: getHeight(10),
+          ),
+          Text(
+            // controller.dashboarddetail.elementAt(1).user!.firstname.toString(),
+            controller.isloading(false)
+                ? "Loading..."
+                : "${user?.firstname} ${user?.lastname}",
+            style: robototitleStyle.copyWith(
+                fontSize: getFont(23),
+                color: AppColors.textGreen,
+                fontWeight: FontWeight.w700),
+          ),
+          Text(
+            "MangalBazaar,Lalitpur",
+            style: archivotitleStyle.copyWith(
+                fontSize: getFont(14),
+                color: AppColors.textGreen,
+                fontWeight: FontWeight.w400),
+          ),
+          SizedBox(
+            height: getHeight(22),
+          ),
+          // Obx(() => Text(controller.isloading.value.toString())),
+          GestureDetector(
+            onTap: () {
+              Get.to(() => DeliveryEditProfile());
+              // controller.isloading.value = true;
+              controller.fetchDashboardDetails();
+              print(controller.dashboarddetail.value.user?.image);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: const Color.fromRGBO(255, 255, 255, 0.5)),
+              child: Text(
+                'Edit',
+                style: archivotitleStyle.copyWith(
+                    fontSize: getFont(15),
+                    color: const Color.fromRGBO(2, 95, 51, 1)),
+              ),
+            ),
+          ),
+        ],
+      ),
+      // )
     );
   }
 
@@ -125,21 +205,8 @@ class Delivery extends StatelessWidget {
   }
 
   buildDeliveryProfileMenu() {
-    // final DashboardController controller = Get.put(DashboardController());
-    //var details = Dashboarddetails();
     return Obx(
-      () =>
-          // controller.isloading.isFalse
-          //     ? SizedBox(
-          //         height: getHeight(200),
-          //         child: const Center(
-          //           child: Text('No data'),
-          //         ),
-          //       )
-          //     :
-          Container(
-        //  width: MediaQuery.of(context).size.width,
-        // height: 170,
+      () => Container(
         padding: EdgeInsets.symmetric(
             horizontal: getWidth(18), vertical: getHeight(20)),
         decoration: BoxDecoration(
@@ -150,9 +217,6 @@ class Delivery extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.035,
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -220,8 +284,8 @@ class Delivery extends StatelessWidget {
 
   buildDeliveryPersonalInfoCard(context) {
     // var personalinfo = User();
-    var user = controller.dashboarddetail.value.user!;
-    return Container(
+    var user = controller.dashboarddetail.value.user;
+    return Obx(() => Container(
         margin: EdgeInsets.only(top: getHeight(22)),
         padding: EdgeInsets.only(top: getHeight(18)),
         width: double.infinity,
@@ -248,7 +312,7 @@ class Delivery extends StatelessWidget {
               height: getHeight(14),
             ),
             buildPersonalInfo('Name',
-                '${user.firstname} ${controller.dashboarddetail.value.user?.lastname}'),
+                '${user?.firstname} ${controller.dashboarddetail.value.user?.lastname}'),
             SizedBox(
               height: getHeight(29),
             ),
@@ -267,7 +331,7 @@ class Delivery extends StatelessWidget {
               height: getHeight(20),
             ),
           ],
-        ));
+        )));
   }
 
   buildPersonalInfo(options, answers) {
@@ -343,7 +407,7 @@ class Delivery extends StatelessWidget {
           SizedBox(height: getHeight(18)),
           InkWell(
             onTap: () {
-              Get.to(() => LoginPage());
+              Get.off(LoginPage());
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,64 +428,6 @@ class Delivery extends StatelessWidget {
                       fontSize: getFont(14), fontWeight: FontWeight.w400),
                 )
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  buildProfileTop() {
-    var user = controller.dashboarddetail.value.user!;
-    return Container(
-      //height: 283,
-      width: double.infinity,
-      padding: EdgeInsets.only(top: getHeight(35), bottom: getHeight(16)),
-      color: AppColors.mainGreen,
-      child: Column(
-        children: [
-          Image.asset(
-            // '${controller.dashboarddetail.value.user?.image}'
-            'assets/images/profile.png',
-            height: getHeight(135),
-            width: getWidth(135),
-          ),
-          SizedBox(
-            height: getHeight(10),
-          ),
-          Text(
-            // controller.dashboarddetail.elementAt(1).user!.firstname.toString(),
-            "${user.firstname} ${controller.dashboarddetail.value.user!.lastname}",
-            style: robototitleStyle.copyWith(
-                fontSize: getFont(23),
-                color: AppColors.textGreen,
-                fontWeight: FontWeight.w700),
-          ),
-          Text(
-            "Mangalbazar, Lalitpur",
-            style: archivotitleStyle.copyWith(
-                fontSize: getFont(14),
-                color: AppColors.textGreen,
-                fontWeight: FontWeight.w400),
-          ),
-          SizedBox(
-            height: getHeight(22),
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(DeliveryEditProfile());
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color.fromRGBO(255, 255, 255, 0.5)),
-              child: Text(
-                'Edit',
-                style: archivotitleStyle.copyWith(
-                    fontSize: getFont(15),
-                    color: const Color.fromRGBO(2, 95, 51, 1)),
-              ),
             ),
           ),
         ],

@@ -110,8 +110,7 @@ class LoginPage extends GetView<AuthController> {
                           {
                             if (_formKey.currentState!.validate()) {
                               controller.loginWithEmail(
-                                  email: "rajpalyadav@gmail.com",
-                                  password: "testing1234");
+                                  email: email.text, password: password.text);
                             }
                           }
                         },
