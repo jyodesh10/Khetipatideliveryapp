@@ -1,5 +1,6 @@
 import 'package:deliveryapp/constant/api.dart';
 import 'package:deliveryapp/models/user.dart';
+import 'package:deliveryapp/utils/snackbar.dart';
 import 'package:get/get.dart';
 
 class UserToken {
@@ -35,7 +36,7 @@ class UserRepo extends GetConnect {
           token,
         ];
       } else {
-        Get.snackbar('Error', 'Login');
+        getSnackbar(message: 'error login');
       }
     } on Exception catch (e) {
       // print(e);

@@ -1,4 +1,5 @@
 import 'package:deliveryapp/controllers/auth_controller.dart';
+import 'package:deliveryapp/controllers/profile_controller.dart';
 import 'package:deliveryapp/models/dashboard.dart';
 import 'package:deliveryapp/models/edit_profile.dart';
 import 'package:deliveryapp/services/daskboard_service.dart';
@@ -10,6 +11,7 @@ class DashboardController extends GetxController {
 
   // var dashboarddetails = <Dashboarddetails>[].obs;
   var dashboarddetail = Dashboarddetails().obs;
+  // var details = <Dashboard>[].obs;
   var profiledata = EditProfile().obs;
   var isloading = true.obs;
 
@@ -25,6 +27,19 @@ class DashboardController extends GetxController {
 
   fetchDashboardDetails() async {
     //dashboarddetail.value = ;
+
+    // var data =
+    //     await DashboardApi().dashboardDetails(authController.token.value);
+    // if (data != null) {
+    //   var dashboarditems = data['data'];
+
+    //   details.clear();
+
+    //   dashboarditems.forEach((v) {
+    //     details.add(Dashboard.fromJson(v));
+    //   });
+    // }
+
     try {
       isloading(true);
       var items =
@@ -54,7 +69,10 @@ class DashboardController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    super.onClose();
+  }
+
   void increment() => count.value++;
 }
 

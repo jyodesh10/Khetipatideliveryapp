@@ -14,7 +14,7 @@ List<Widget> tabs = [
   Delivery(),
   DeliveryOrders(),
   const MyEarnings(),
-  DeliveryEditProfile()
+  Delivery()
 ];
 
 class HomeScreen extends StatelessWidget {
@@ -36,26 +36,26 @@ class HomeScreen extends StatelessWidget {
       body: buildTab(),
 
       ///cart button
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
-      floatingActionButton: InkWell(
-        onTap: () {
-          // Get.to(() => CartScreen());
-        },
-        child: Container(
-            margin: EdgeInsets.only(top: getHeight(20)),
-            padding: const EdgeInsets.all(10),
-            width: getHeight(68),
-            height: getHeight(68),
-            decoration: BoxDecoration(
-                color: AppColors.mainGrey,
-                border: Border.all(width: 3.5, color: AppColors.mainGreen),
-                borderRadius: BorderRadius.circular(40)),
-            child: Image.asset(
-              'assets/icons/cart.png',
-              height: getHeight(20),
-            )),
-      ),
+      // floatingActionButtonLocation:
+      //     FloatingActionButtonLocation.miniCenterDocked,
+      // floatingActionButton: InkWell(
+      //   onTap: () {
+      //     // Get.to(() => CartScreen());
+      //   },
+      //   child: Container(
+      //       margin: EdgeInsets.only(top: getHeight(20)),
+      //       padding: const EdgeInsets.all(10),
+      //       width: getHeight(68),
+      //       height: getHeight(68),
+      //       decoration: BoxDecoration(
+      //           color: AppColors.mainGrey,
+      //           border: Border.all(width: 3.5, color: AppColors.mainGreen),
+      //           borderRadius: BorderRadius.circular(40)),
+      //       child: Image.asset(
+      //         'assets/icons/cart.png',
+      //         height: getHeight(20),
+      //       )),
+      // ),
     );
   }
 

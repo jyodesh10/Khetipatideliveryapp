@@ -90,7 +90,7 @@ class User {
   String? lastname;
   String? email;
   String? phone;
-  String? image;
+  dynamic image;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         firstname: json["firstname"],

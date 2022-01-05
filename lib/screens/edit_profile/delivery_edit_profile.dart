@@ -51,6 +51,69 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
     );
   }
 
+  buildEditProfileTop() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      color: AppColors.mainGreen,
+      child: Column(
+        children: [
+          Obx(() => Container(
+              margin:
+                  EdgeInsets.only(top: getHeight(33), bottom: getHeight(15)),
+              child: controller.selectedImagePath.value == ''
+                  ?
+                  // const Center(
+                  //     child: CircularProgressIndicator(),
+                  //   )
+                  // Image.network(controller.editProfile.value?.image)
+                  Image.asset(
+                      'assets/images/profile.png',
+                      height: getHeight(135),
+                      width: getWidth(135),
+                    )
+                  : Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.white,
+                          child: CircleAvatar(
+                              radius: 58,
+                              backgroundColor: Colors.grey[300],
+                              backgroundImage: FileImage(
+                                File(controller.selectedImagePath.value),
+                              )
+                              // child: ClipRRect(
+                              //   // borderRadius: BorderRadius.circular(50),
+                              //   child: Image.file(
+                              //     File(controller.selectedImagePath.value),
+                              //     // fit: BoxFit.contain,
+                              //   ),
+                              // ),
+                              ),
+                        ),
+                        Text(controller.selectedImageSize.value)
+                      ],
+                    ))),
+          GestureDetector(
+            onTap: () {
+              controller.getImage();
+            },
+            child: Text(
+              "Change Profile Picture",
+              style: archivotitleStyle.copyWith(
+                  fontSize: getFont(16),
+                  color: Colors.green[900],
+                  fontWeight: FontWeight.normal),
+            ),
+          ),
+          SizedBox(
+            height: getHeight(20),
+          )
+        ],
+      ),
+    );
+  }
+
   buildEditProfileForm() {
     return Container(
       margin: EdgeInsets.only(left: getWidth(30), right: getWidth(30)),
@@ -119,7 +182,9 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
               onPressed: () {
                 if (controller.email != null) {
                   controller.edit_profile();
-                  controller.upload_image;
+                  controller
+                      .uploadImage(File(controller.selectedImagePath.value));
+
                   DashboardController().fetchDashboardDetails();
                 } else {
                   getSnackbar(message: 'Error editing data');
@@ -217,56 +282,6 @@ class _DeliveryEditProfileState extends State<DeliveryEditProfile> {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  buildEditProfileTop() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: AppColors.mainGreen,
-      child: Column(
-        children: [
-          Obx(() => Container(
-              margin:
-                  EdgeInsets.only(top: getHeight(33), bottom: getHeight(15)),
-              child: controller.selectedImagePath.value == ''
-                  ? Image.asset(
-                      'assets/images/profile.png',
-                      height: getHeight(135),
-                      width: getWidth(135),
-                    )
-                  : Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundColor: AppColors.mainGreen,
-                          child: ClipOval(
-                            child: Image.file(
-                              File(controller.selectedImagePath.value),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        Text(controller.selectedImageSize.value)
-                      ],
-                    ))),
-          GestureDetector(
-            onTap: () {
-              controller.getImage();
-            },
-            child: Text(
-              "Change Profile Picture",
-              style: archivotitleStyle.copyWith(
-                  fontSize: getFont(16),
-                  color: Colors.green[900],
-                  fontWeight: FontWeight.normal),
-            ),
-          ),
-          SizedBox(
-            height: getHeight(20),
-          )
-        ],
       ),
     );
   }

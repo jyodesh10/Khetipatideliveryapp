@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:deliveryapp/constant/api.dart';
 import 'package:deliveryapp/models/dashboard.dart';
+import 'package:deliveryapp/utils/snackbar.dart';
 import 'package:get/get_connect.dart';
 import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
@@ -15,14 +16,26 @@ class DashboardApi extends GetConnect {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
+
+    // try {
+    //   var response = await get(dashboardApi, headers: headers);
+    //   if (response.status == 200) {
+    //     var data = (response.body);
+
+    //     return data;
+    //   } else {
+    //     getSnackbar(message: 'Error fetching data');
+    //   }
+    // } on Exception catch (e) {
+    //   // TODO
+    // }
+
     try {
       var response = await http.get(Uri.parse(dashboardApi), headers: headers);
 
       if (response.statusCode == 200) {
-        // print(response.body);
         final responsedata = jsonDecode(response.body);
-        // Map<String, dynamic> data = responsedata['data'];
-        // Map<String, dynamic> details = data['dashboarddetails'];
+
         Dashboarddetails details =
             Dashboarddetails.fromJson(responsedata["data"]["dashboarddetails"]);
         return details;

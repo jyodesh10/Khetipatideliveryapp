@@ -1,6 +1,6 @@
 import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/constant/size_config.dart';
-import 'package:deliveryapp/screens/orders/test/product_controller.dart';
+import 'package:deliveryapp/controllers/orders_controller.dart';
 import 'package:deliveryapp/theme.dart';
 import 'package:deliveryapp/widgets/appbar.dart';
 import 'package:deliveryapp/widgets/divider.dart';
@@ -10,8 +10,7 @@ import 'package:get/get.dart';
 class DeliveryOrders extends StatelessWidget {
   DeliveryOrders({Key? key}) : super(key: key);
 
-  final ProductController controller = Get.put(ProductController());
-
+  final OrdersController controller = Get.put(OrdersController());
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -180,7 +179,7 @@ class DeliveryOrders extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.zero,
-            height: 1000,
+            height: 800,
             //width: 350,
             child: TabBarView(
               // physics: const NeverScrollableScrollPhysics(),
@@ -192,40 +191,52 @@ class DeliveryOrders extends StatelessWidget {
                 //         'Cherry',
                 //         'Delivered',
                 //         const Color.fromRGBO(135, 194, 65, 0.2))),
-                Obx(() => controller.isLoading.value
-                    ? const Center(child: CircularProgressIndicator())
-                    : ListView.separated(
+                Obx(() => controller.ordersCompletedList.isNotEmpty
+                    ? ListView.separated(
                         shrinkWrap: true,
-                        itemCount: controller.productList.length,
+                        itemCount: controller.ordersCompletedList.length,
                         //  physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, i) {
                           return buildOrderItemsTile(
                               // controller.productList[i].imageLink,
                               'assets/images/items/melons.png',
-                              controller.productList[i].name,
+                              'Cherry',
+                              // controller.productList[i].name,
                               'Delivered',
                               const Color.fromRGBO(135, 194, 65, 0.2));
                         },
                         separatorBuilder: (context, index) {
                           return divider();
                         },
+                      )
+                    : const SizedBox(
+                        height: 200,
+                        child: Center(
+                          child: Text('Empty'),
+                        ),
                       )),
-
-                ListView.separated(
-                  shrinkWrap: false,
-                  itemCount: 10,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, i) {
-                    return buildOrderItemsTile(
-                        'assets/images/items/melons.png',
-                        'Melon',
-                        'Pending',
-                        const Color.fromRGBO(216, 47, 47, 0.2));
-                  },
-                  separatorBuilder: (context, index) {
-                    return divider();
-                  },
-                ),
+                Obx(() => controller.ordersCompletedList.isNotEmpty
+                    ? ListView.separated(
+                        shrinkWrap: false,
+                        itemCount: 10,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, i) {
+                          return buildOrderItemsTile(
+                              'assets/images/items/melons.png',
+                              'Melon',
+                              'Pending',
+                              const Color.fromRGBO(216, 47, 47, 0.2));
+                        },
+                        separatorBuilder: (context, index) {
+                          return divider();
+                        },
+                      )
+                    : const SizedBox(
+                        height: 200,
+                        child: Center(
+                          child: Text('Empty'),
+                        ),
+                      )),
               ],
             ),
           ),

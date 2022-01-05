@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:deliveryapp/constant/colors.dart';
 import 'package:deliveryapp/controllers/auth_controller.dart';
 import 'package:deliveryapp/models/edit_profile.dart';
 import 'package:deliveryapp/services/change_password.dart';
@@ -8,6 +9,8 @@ import 'package:deliveryapp/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ProfileController extends GetxController {
   static ProfileController instance = Get.find();
@@ -29,8 +32,15 @@ class ProfileController extends GetxController {
   // late File image;
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
+
+  // Crop code
+  var cropImagePath = ''.obs;
+  var cropImageSize = ''.obs;
+
+  // Compress code
+  var compressImagePath = ''.obs;
+  var compressImageSize = ''.obs;
   String imagePath = '';
-  final _picker = ImagePicker();
 
   // PickedFile? imageFile = null.obs as PickedFile?;
 
@@ -50,23 +60,10 @@ class ProfileController extends GetxController {
           gender.text,
           dob.text,
           authController.token.value);
-      print(response.body);
-
-      // if (response.statuscode == 200) {
-      //   Get.to(Delivery());
-      // }
-      // print(items.toJson().toString());
-      // if (items != null) {
-      //   editProfile.value = items;
-      // }
+      print(response.body["profile_image"]);
     } finally {
       isloading(false);
     }
-  }
-
-  upload_image() async {
-    var response =
-        await ProfileApi().uploadImage(File(selectedImagePath.value));
   }
 
   void getImage() async {
@@ -76,9 +73,11 @@ class ProfileController extends GetxController {
     if (pickedFile != null) {
       selectedImagePath.value = pickedFile.path;
       selectedImageSize.value =
-          ((File(selectedImagePath.value)).lengthSync() / 1024 / 2000)
+          ((File(selectedImagePath.value)).lengthSync() / 1024 / 1024)
                   .toStringAsFixed(2) +
               " Mb";
+      // uploadImage(File(selectedImagePath.value));
+
     } else {
       getSnackbar(
         message: 'No image selected',
@@ -86,6 +85,28 @@ class ProfileController extends GetxController {
     }
   }
 
+  void uploadImage(File file) {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false,
+    );
+    ProfileApi().uploadImage(authController.token.value, file).then((resp) {
+      Get.back();
+      if (resp == "success") {
+        getSnackbar(
+            message: 'Success File Uploaded', bgColor: AppColors.mainGreen);
+      } else if (resp == "fail") {
+        getSnackbar(message: 'Error uploading file ');
+      }
+    }, onError: (err) {
+      Get.back();
+      getSnackbar(message: 'Error uploading file ');
+    });
+  }
+
+  // ignore: non_constant_identifier_names
   change_password() async {
     var response = await ChangePasswordApi().changepassword(
         currentpassword.text, newpassword.text, authController.token.value);

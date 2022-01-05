@@ -63,7 +63,7 @@ class LoginPage extends GetView<AuthController> {
                       height: getHeight(20),
                     ),
                     const Text(
-                      'Logins',
+                      'Login',
                       style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w700,
@@ -114,28 +114,6 @@ class LoginPage extends GetView<AuthController> {
                             }
                           }
                         },
-                        // child: Obx(
-                        //   () => controller.authState.value ==
-                        //           AuthState.Authenticated
-                        //       ? const CircularProgressIndicator()
-                        //       : Text(
-                        //           'Login',
-                        //           style: TextStyle(
-                        //             fontSize: getFont(20),
-                        //             fontWeight: FontWeight.w700,
-                        //           ),
-                        //         ),
-                        // ),
-                        // style: ButtonStyle(
-                        //   backgroundColor: MaterialStateProperty.all<Color>(
-                        //       const Color.fromRGBO(135, 194, 65, 1)),
-                        //   shape:
-                        //       MaterialStateProperty.all<RoundedRectangleBorder>(
-                        //     RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(50.0),
-                        //     ),
-                        //   ),
-                        // ),
                         label: 'Login',
                       ),
                     ),

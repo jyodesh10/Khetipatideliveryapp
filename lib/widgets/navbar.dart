@@ -37,7 +37,7 @@ class CustomNav extends StatelessWidget {
               isSelected: controller.selectedIndex == 1 ? true : false,
               label: 'Order',
             ),
-            SizedBox(width: getWidth(40)),
+            // SizedBox(width: getWidth(40)),
             NavItem(
               ontap: () {
                 controller.updateIndex(2);
@@ -47,7 +47,7 @@ class CustomNav extends StatelessWidget {
                 'assets/icons/notificationselected.png'
               ],
               isSelected: controller.selectedIndex == 2 ? true : false,
-              label: 'Notification',
+              label: 'Earning',
             ),
             NavItem(
               ontap: () {

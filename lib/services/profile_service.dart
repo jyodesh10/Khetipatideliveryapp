@@ -20,34 +20,27 @@ class ProfileApi extends GetConnect {
         'Authorization': 'Bearer $token',
       };
 
-      Map<String, String> formdata = {
+      var formdata = {
         "full_name": fullname,
         "address": address,
         "email": email,
         "phone": phone,
         "gender": gender,
         "dob": dob,
-        // "image": uploadImage(image),
+        // "profile_image": MultipartFile(image, filename: "image.jpg")
       };
 
       var response = await http.post(
-        Uri.parse(
-          Url.base + "api/deliveryboy/editprofilesubmit",
-        ),
-        body: formdata,
-        headers: headers,
-      );
+          Uri.parse(Url.base + "api/deliveryboy/editprofilesubmit"),
+          body: formdata,
+          headers: headers);
 
       if (response.statusCode == 200) {
         var responsedata = jsonEncode(response.body);
 
         print(responsedata);
 
-        // Get.to(() => Delivery());
-        // Get.back(result: true);
-        // Get.delete();
-        Get.off(() => Delivery());
-        // DashboardController().fetchDashboardDetails();
+        Get.back(result: "success");
 
         getSnackbar(
             message: "Successfully edited", bgColor: AppColors.mainGreen);
@@ -61,15 +54,27 @@ class ProfileApi extends GetConnect {
     }
   }
 
-  Future<String?> uploadImage(filepath) async {
-    var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-          Url.base + "api/deliveryboy/editprofilesubmit",
-        ));
-    request.files.add(await http.MultipartFile.fromPath('image', filepath));
-    var res = await request.send();
-    return res.reasonPhrase;
+  uploadImage(String token, File image) async {
+    try {
+      var headers = {
+        'Authorization': 'Bearer  $token',
+      };
+      final form = FormData({
+        "profile_image": MultipartFile(image, filename: 'pipi.jpg'),
+      });
+      final response = await post(
+          Url.base + "api/deliveryboy/editprofilesubmit", form,
+          headers: headers);
+      if (response.statusCode == 200) {
+        var responsedata = jsonEncode(response.body);
+        print(response.body);
+        getSnackbar(message: 'Image uploaded', bgColor: AppColors.mainGreen);
+      } else {
+        throw Exception();
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
   }
 
   Future fetchProfiledata(String token) async {

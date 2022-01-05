@@ -14,9 +14,9 @@ import 'package:get/get.dart';
 import '../../theme.dart';
 import '../edit_profile/delivery_edit_profile.dart';
 
-class Delivery extends StatelessWidget {
+class Delivery extends GetView<DashboardController> {
   final DashboardController controller = Get.put(DashboardController());
-  late Future<Dashboarddetails> futureAlbum;
+  // late Future<Dashboarddetails> futureAlbum;
 
   Delivery({Key? key}) : super(key: key);
 
@@ -24,36 +24,42 @@ class Delivery extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainGreen,
-      appBar: buildAppbar(null, 'Khetipati'),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildProfileTop(),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              // height: 815,
-              padding: EdgeInsets.symmetric(
-                  horizontal: getWidth(20), vertical: getHeight(22)),
+      // bottomNavigationBar: CustomNav(),
+      appBar: buildAppbar(Icons.arrow_back_ios_new_sharp, 'Khetipati'),
+      body: RefreshIndicator(
+        onRefresh: () => controller.fetchDashboardDetails(),
+        color: AppColors.textGreen,
+        backgroundColor: AppColors.mainGreen,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildProfileTop(),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                // height: 815,
+                padding: EdgeInsets.symmetric(
+                    horizontal: getWidth(20), vertical: getHeight(22)),
 
-              decoration: const BoxDecoration(
-                color: AppColors.mainGrey,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30),
-                  topLeft: Radius.circular(30),
-                ),
-              ),
-              child: Column(
-                children: [
-                  buildDeliveryProfileMenu(),
-                  buildDeliveryPersonalInfoCard(context),
-                  SizedBox(
-                    height: getHeight(20),
+                decoration: const BoxDecoration(
+                  color: AppColors.mainGrey,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    topLeft: Radius.circular(30),
                   ),
-                  logoutAndSwitchAccTile(),
-                ],
-              ),
-            )
-          ],
+                ),
+                child: Column(
+                  children: [
+                    buildDeliveryProfileMenu(),
+                    buildDeliveryPersonalInfoCard(context),
+                    SizedBox(
+                      height: getHeight(20),
+                    ),
+                    logoutAndSwitchAccTile(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -71,36 +77,41 @@ class Delivery extends StatelessWidget {
       color: AppColors.mainGreen,
       child: Column(
         children: [
-          user?.image != null
-              ? CircleAvatar(
-                  radius: 62,
-                  child: CircleAvatar(
-                    radius: 60,
-                    child: ClipOval(
-                      child: Image.network(
-                          Url.base + '/' + user!.image.toString()),
+          Obx(
+            () => controller.isloading.value
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.textGreen,
                     ),
+                  )
+                : CircleAvatar(
+                    radius: 62,
+                    backgroundColor: Colors.white,
+                    child: user?.image != null
+                        ? CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: NetworkImage(
+                                Url.base + '/' + user!.image.toString(),
+                                scale: 100),
+                            radius: 60,
+                          )
+                        : Container(),
                   ),
-                )
-              : Image.asset(
-                  // '${controller.dashboarddetail.value.user?.image}'
-                  'assets/images/profile.png',
-                  height: getHeight(135),
-                  width: getWidth(135),
-                ),
+          ),
+
           SizedBox(
             height: getHeight(10),
           ),
-          Text(
-            // controller.dashboarddetail.elementAt(1).user!.firstname.toString(),
-            controller.isloading(false)
-                ? "Loading..."
-                : "${user?.firstname} ${user?.lastname}",
-            style: robototitleStyle.copyWith(
-                fontSize: getFont(23),
-                color: AppColors.textGreen,
-                fontWeight: FontWeight.w700),
-          ),
+          Obx(() => Text(
+                // controller.dashboarddetail.elementAt(1).user!.firstname.toString(),
+                controller.isloading.value
+                    ? "Loading..."
+                    : "${user?.firstname}",
+                style: robototitleStyle.copyWith(
+                    fontSize: getFont(23),
+                    color: AppColors.textGreen,
+                    fontWeight: FontWeight.w700),
+              )),
           Text(
             "MangalBazaar,Lalitpur",
             style: archivotitleStyle.copyWith(
@@ -114,8 +125,9 @@ class Delivery extends StatelessWidget {
           // Obx(() => Text(controller.isloading.value.toString())),
           GestureDetector(
             onTap: () {
-              Get.to(() => DeliveryEditProfile());
+              Get.to(() => const DeliveryEditProfile());
               // controller.isloading.value = true;
+              // controller.dispose();
               controller.fetchDashboardDetails();
               print(controller.dashboarddetail.value.user?.image);
             },
@@ -205,15 +217,15 @@ class Delivery extends StatelessWidget {
   }
 
   buildDeliveryProfileMenu() {
-    return Obx(
-      () => Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: getWidth(18), vertical: getHeight(20)),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
+    return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: getWidth(18), vertical: getHeight(20)),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Obx(
+        () => Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -285,7 +297,7 @@ class Delivery extends StatelessWidget {
   buildDeliveryPersonalInfoCard(context) {
     // var personalinfo = User();
     var user = controller.dashboarddetail.value.user;
-    return Obx(() => Container(
+    return Container(
         margin: EdgeInsets.only(top: getHeight(22)),
         padding: EdgeInsets.only(top: getHeight(18)),
         width: double.infinity,
@@ -304,34 +316,46 @@ class Delivery extends StatelessWidget {
                   fontSize: getFont(18),
                   fontWeight: FontWeight.w400),
             ),
-            SizedBox(
-              height: getHeight(19),
-            ),
-            divider(),
-            SizedBox(
-              height: getHeight(14),
-            ),
-            buildPersonalInfo('Name',
-                '${user?.firstname} ${controller.dashboarddetail.value.user?.lastname}'),
-            SizedBox(
-              height: getHeight(29),
-            ),
-            buildPersonalInfo('Address', 'KTm'),
-            SizedBox(
-              height: getHeight(29),
-            ),
-            buildPersonalInfo(
-                'Phone No.', "${controller.dashboarddetail.value.user?.phone}"),
-            SizedBox(
-              height: getHeight(29),
-            ),
-            buildPersonalInfo(
-                'Email', "${controller.dashboarddetail.value.user?.email}"),
-            SizedBox(
-              height: getHeight(20),
-            ),
+            Obx(() => controller.isloading.value
+                ? const SizedBox(
+                    width: double.infinity,
+                    height: 200,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      SizedBox(
+                        height: getHeight(19),
+                      ),
+                      divider(),
+                      SizedBox(
+                        height: getHeight(14),
+                      ),
+                      buildPersonalInfo('Name',
+                          controller.dashboarddetail.value.user?.firstname),
+                      SizedBox(
+                        height: getHeight(29),
+                      ),
+                      buildPersonalInfo('Address', 'KTm'),
+                      SizedBox(
+                        height: getHeight(29),
+                      ),
+                      buildPersonalInfo('Phone No.',
+                          "${controller.dashboarddetail.value.user?.phone}"),
+                      SizedBox(
+                        height: getHeight(29),
+                      ),
+                      buildPersonalInfo('Email',
+                          "${controller.dashboarddetail.value.user?.email}"),
+                      SizedBox(
+                        height: getHeight(20),
+                      ),
+                    ],
+                  ))
           ],
-        )));
+        ));
   }
 
   buildPersonalInfo(options, answers) {
@@ -407,7 +431,7 @@ class Delivery extends StatelessWidget {
           SizedBox(height: getHeight(18)),
           InkWell(
             onTap: () {
-              Get.off(LoginPage());
+              Get.offAll(() => LoginPage());
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
